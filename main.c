@@ -6,7 +6,7 @@ int main(void) {
     //InitWindow(400, 400, "not main screen");
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    Texture2D duck= LoadTexture("D://FUM//projects//elysian//duck.png");
+    Texture2D duck=LoadTexture("D://FUM//projects//elysian//duck.png");
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
