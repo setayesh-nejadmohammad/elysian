@@ -9,7 +9,6 @@ const int windowSize = 1050;
 int startX = (windowSize - (maxCol*cellSize)) / 2 + 400;
 int startY = (windowSize - (maxRow*cellSize)) / 2;
 
-
 //draw a table.
 void drawGrid(){
     for(int i=0;i<maxRow;i++){
@@ -23,12 +22,6 @@ void drawGrid(){
 void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
     DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize, cellSize, RED);
 }
-void drawIcon(int x, int y) {
-    Texture2D village= LoadTexture("D://git projects//elysian//pics//village.png");
-    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
-    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, WHITE);
-}
-
 
 
 
@@ -44,8 +37,6 @@ int main(void) {
     //--------------------------------------------------------------------------------------
     Texture2D duck= LoadTexture("D://FUM//projects//elysian//duck.png");
     Texture2D table1 = LoadTexture("D://FUM//projects//elysian//duck.png");
-    Texture2D village= LoadTexture("D://git projects//elysian//pics//village.png");
-    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -58,9 +49,6 @@ int main(void) {
 
         //ClearBackground(RAYWHITE);
         drawGrid();
-        drawIcon(3,4);
-
-
 
 
         EndDrawing();
