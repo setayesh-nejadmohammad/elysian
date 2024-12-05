@@ -12,6 +12,8 @@ int startY = (windowSize - (maxRow*cellSize)) / 2;
 
 //draw a table.
 void drawGrid(int n, int m){
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
             DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
@@ -23,11 +25,28 @@ void drawGrid(int n, int m){
 void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
     DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize, cellSize, RED);
 }
-void drawIcon(int x, int y) {
-    Texture2D village= LoadTexture("D://git projects//elysian//pics//village.png");
+void drawCastle(int x, int y, int n, int m) {
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
     Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
     DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, WHITE);
 }
+void drawVillage(int x, int y, int n, int m){
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D village = LoadTexture("D://git projects//elysian//pics//village.png");
+    DrawTexture(village, startX + x * cellSize, startY + y * cellSize, WHITE);
+}
+void drawBlock(int x, int y, int n, int m){
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
+    DrawTexture(block, startX + x * cellSize, startY + y * cellSize, WHITE);
+}
+
+
+
+
 
 
 
