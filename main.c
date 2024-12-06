@@ -14,9 +14,11 @@ int startY = (windowSize - (maxRow*cellSize)) / 2;
 void drawGrid(int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    DrawTexture(background,0,0,WHITE);
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
-            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
+            //DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
             DrawRectangleLines(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, DARKGRAY);
         }
     }
@@ -153,7 +155,7 @@ int main(void) {
 
         ClearBackground(GRAY);
 
-        //DrawText("Elysian!", 850, 500, 80, BLACK);
+        DrawText("Elysian!", 850, 20, 80, BLACK);
         //DrawTexture(duck,100,100,WHITE);
 
         //ClearBackground(RAYWHITE);
@@ -171,9 +173,9 @@ int main(void) {
                 else if(map[i][j] == 'x'){
                     drawBlock(i, j, n, m);
                 }
-                else {
+                /*else {
                     drawColor(i, j, n, m);
-                }
+                }*/
             }
         }
 
