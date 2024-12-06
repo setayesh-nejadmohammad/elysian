@@ -43,7 +43,6 @@ int main(void) {
 
         ClearBackground(GRAY);
 
-        //DrawText("Elysian!", 850, 20, 80, BLACK);
         //DrawTexture(duck,100,100,WHITE);
 
 
@@ -51,12 +50,16 @@ int main(void) {
         //ClearBackground(RAYWHITE);
         //draw table
         drawGrid(n,m);
+        //DrawText("Elysian!", 850, 20, 80, DARKBLUE);
 
         //Draw the icons in the main window
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m ; j++){
                 if(map[i][j] == 'c'){
-                    drawCastle(i, j, n, m);
+                    drawCastle1(i, j, n, m);
+                }
+                else if(map[i][j] == 'b'){
+                    drawCastle2(i, j, n, m);
                 }
                 else if(map[i][j] == 'v'){
                     drawVillage(i, j, n, m);
