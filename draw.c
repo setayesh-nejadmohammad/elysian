@@ -43,12 +43,12 @@ void Map(int map[][17],int n,int m){
     scanf("%d", &castleNum);                //get the number of castles
     int x1, y1, x2, y2;
     if (castleNum == 1) {
-        printf("castle 1 coordinations(x1, y1):\n");        //get castles coordinates
+        printf("castle 1 coordinations(x1, y1): ");        //get castles coordinates
         scanf("%d %d", &x1, &y1);
     } else {
-        printf("castle 1 coordinations(x1, y1):\n");
+        printf("castle 1 coordinations(x1, y1): ");
         scanf("%d %d", &x1, &y1);
-        printf("castle 2 coordinations(x2, y2):\n");
+        printf("castle 2 coordinations(x2, y2): ");
         scanf("%d %d", &x2, &y2);
     }
     printf("Enter the number of village(max = 20): ");
