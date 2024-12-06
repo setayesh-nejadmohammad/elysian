@@ -5,7 +5,8 @@
 // Function declarations (prototypes)
 void drawGrid();
 void drawColor();
-void drawCastle();
+void drawCastle1();
+void drawCastle2();
 void drawVillage();
 void drawBlock();
 void Map();
