@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "raylib.h"
 
 
@@ -14,18 +16,43 @@ int startY = (windowSize - (maxRow*cellSize)) / 2;
 void drawGrid(int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    DrawTexture(background,0,0,WHITE);
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
-            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
+            //DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
             DrawRectangleLines(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, DARKGRAY);
         }
     }
 }
 
 void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and this function will change the color of that position.
+    // Seed the random number generator with the current time
+    //srand(time(NULL));
+    int randomNum = (rand() % 5) + 1; //Generate a random number
+    Color level1 = (Color){0, 146, 115, 16 };
+    Color level2 = (Color){0, 146, 115, 32} ;
+    Color level3 = (Color){0, 146, 115, 64} ;
+    Color level4 = (Color){0, 146, 115, 128} ;
+    Color level5 = (Color){0, 146, 115, 255} ;
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
-    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, RED);
+    if(randomNum == 1){
+        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level1);
+    }
+    else if(randomNum == 2){
+        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level2);
+    }
+    else if(randomNum == 3){
+        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level3);
+    }
+    else if(randomNum == 4){
+        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level4);
+    }
+    else if(randomNum == 5){
+        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level5);
+    }
+
 }
 void drawCastle(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
@@ -140,7 +167,11 @@ int main(void) {
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
+    // Seed the random number generator with the current time
+    //srand(time(NULL));
+
+
     //--------------------------------------------------------------------------------------
     Texture2D duck= LoadTexture("D://FUM//projects//elysian//duck.png");
     Texture2D table1 = LoadTexture("D://FUM//projects//elysian//duck.png");
@@ -153,7 +184,7 @@ int main(void) {
 
         ClearBackground(GRAY);
 
-        //DrawText("Elysian!", 850, 500, 80, BLACK);
+        //DrawText("Elysian!", 850, 20, 80, BLACK);
         //DrawTexture(duck,100,100,WHITE);
 
         //ClearBackground(RAYWHITE);
@@ -176,9 +207,6 @@ int main(void) {
                 }
             }
         }
-
-
-
 
         EndDrawing();
 
