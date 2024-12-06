@@ -10,17 +10,21 @@ int startX = (windowSize - (maxCol*cellSize)) / 2 + 400;
 int startY = (windowSize - (maxRow*cellSize)) / 2;
 
 //draw a table.
-void drawGrid(){
-    for(int i=0;i<maxRow;i++){
-        for(int j=0;j<maxCol;j++){
+void drawGrid(int n, int m){
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
             DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
             DrawRectangleLines(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, DARKGRAY);
         }
     }
 }
 
-void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
-    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize, cellSize, RED);
+void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and this function will change the color of that position.
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, RED);
 }
 
 
@@ -48,7 +52,6 @@ int main(void) {
         //DrawTexture(duck,100,100,WHITE);
 
         //ClearBackground(RAYWHITE);
-        drawGrid();
 
 
         EndDrawing();
