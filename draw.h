@@ -1,11 +1,17 @@
-//
-// Created by melina daee on 06/12/2024.
-//
+// draw.h
+#ifndef draw_H
+#define draw_H
 
-#ifndef ELYSIAN_DRAW_H
-#define ELYSIAN_DRAW_H
+// Function declarations (prototypes)
+void drawGrid();
+void drawColor();
+void drawCastle();
+// ... other declarations
+
+// Variable declarations (if global)
+extern int windowSize;  // Declare as extern to indicate it's defined elsewhere
+extern int cellSize;
+
+#endif // DRAW_H
 
 
-
-
-#endif //ELYSIAN_DRAW_H
