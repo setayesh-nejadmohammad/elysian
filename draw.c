@@ -47,11 +47,17 @@ void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and 
     }
 
 }
-void drawCastle(int x, int y, int n, int m) {
+void drawCastle1(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
     Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
     DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, WHITE);
+}
+void drawCastle2(int x, int y, int n, int m) {
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
+    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
 }
 void drawVillage(int x, int y, int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
@@ -76,10 +82,10 @@ void Map(int map[][17],int n,int m) {
     } else {
         printf("castle 1 coordinations(x1, y1): ");
         printf("x1 y1 = ");
-        scanf("%d", &x1, &y1);
+        scanf("%d %d", &x1, &y1);
         printf("castle 2 coordinations(x2, y2): ");
         printf("x2 y2= ");
-        scanf("%d", &x2, &y2);
+        scanf("%d %d", &x2, &y2);
     }
     printf("Enter the number of village(max = 25): ");
     int villNum;
@@ -113,10 +119,10 @@ void Map(int map[][17],int n,int m) {
                 //printf("c1 ");
                 map[i][j] = 'c';
             }
-                /*else if(i == x2 && j == y2){
-                    printf("c2 ");
+                else if(i == x2 && j == y2){
+                    //printf("c2 ");
                     map[i][j] = 'b';
-                }*/
+                }
             else if (map[i][j] == 0) {
                 //printf(" 1 ");
                 map[i][j] = 1;
