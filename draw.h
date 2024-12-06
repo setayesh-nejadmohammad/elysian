@@ -6,6 +6,9 @@
 void drawGrid();
 void drawColor();
 void drawCastle();
+void drawVillage();
+void drawBlock();
+void Map();
 // ... other declarations
 
 // Variable declarations (if global)
