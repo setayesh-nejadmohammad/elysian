@@ -19,9 +19,9 @@ void drawGrid(){
     }
 }
 
-/*void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
+void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
     DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize, cellSize, RED);
-}*/
+}
 
 
 
@@ -48,7 +48,7 @@ int main(void) {
         //DrawTexture(duck,100,100,WHITE);
 
         //ClearBackground(RAYWHITE);
-
+        drawGrid();
 
 
         EndDrawing();
