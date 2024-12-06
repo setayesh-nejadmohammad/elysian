@@ -22,8 +22,10 @@ void drawGrid(int n, int m){
     }
 }
 
-void DrawUser(int x, int y){    //x and y are chosen by user and this function will change the color of that position.
-    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize, cellSize, RED);
+void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and this function will change the color of that position.
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, RED);
 }
 void drawCastle(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
@@ -59,7 +61,7 @@ int main(void) {
     printf("m = ");
     scanf("%d", &m); //get the table column num
 
-    /*int map[17][17]={0};
+    int map[17][17]={0};
 
     printf("number of castles(1 or 2): ");
     int castleNum, castle1, castle2;
@@ -120,7 +122,7 @@ int main(void) {
                 /*else if(i == x2 && j == y2){
                     printf("c2 ");
                     map[i][j] = 'b';
-                }*/ /*
+                }*/
             else if(map[i][j] == 0){
                 //printf(" 1 ");
                 map[i][j] = 1;
@@ -134,7 +136,7 @@ int main(void) {
             printf(" %d ", map[i][j]);
         }
         printf("\n");
-    } */
+    }
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
 
@@ -157,6 +159,23 @@ int main(void) {
         //ClearBackground(RAYWHITE);
         drawGrid(n,m);
 
+        //Draw the icons in the main window
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m ; j++){
+                if(map[i][j] == 'c'){
+                    drawCastle(i, j, n, m);
+                }
+                else if(map[i][j] == 'v'){
+                    drawVillage(i, j, n, m);
+                }
+                else if(map[i][j] == 'x'){
+                    drawBlock(i, j, n, m);
+                }
+                else {
+                    drawColor(i, j, n, m);
+                }
+            }
+        }
 
 
 
