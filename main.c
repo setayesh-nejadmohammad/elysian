@@ -35,10 +35,7 @@ int main(void) {
 
 
     //--------------------------------------------------------------------------------------
-    //Texture2D duck= LoadTexture("D://FUM//projects//elysian//duck.png");
-    Texture2D table1 = LoadTexture("D://FUM//projects//elysian//duck.png");
-    Texture2D village= LoadTexture("pics/village.png");
-    Texture2D castle= LoadTexture("pics/castle.png");
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
