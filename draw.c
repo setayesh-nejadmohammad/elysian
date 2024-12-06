@@ -3,17 +3,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-const int windowSize=800;
-const int cellSize=40;
+const int windowSize=1050;
+const int cellSize=50;
 
 
 void drawGrid(int n, int m) {
     int startX = (windowSize - (m * cellSize)) / 2 + 400;
     int startY = (windowSize - (n * cellSize)) / 2;
+    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    DrawTexture(background, 0, 0, WHITE);
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            Texture2D background = LoadTexture("C://Users//M//CLionProjects//elysian1//pics//background.png");
-            DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, LIGHTGRAY);
+        for (int j = 0; j < m; j++){
+            //DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, LIGHTGRAY);
             DrawRectangleLines(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, DARKGRAY);
         }
     }
