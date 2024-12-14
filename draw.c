@@ -19,32 +19,30 @@ void drawGrid(int n, int m) {
         }
     }
 }
-void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and this function will change the color of that position.
-    // Seed the random number generator with the current time
-    //srand(time(NULL));
-    int randomNum = (rand() % 5) + 1; //Generate a random number
-    Color level1 = (Color){0, 146, 115, 16 };
-    Color level2 = (Color){0, 146, 115, 32} ;
-    Color level3 = (Color){0, 146, 115, 64} ;
-    Color level4 = (Color){0, 146, 115, 128} ;
-    Color level5 = (Color){0, 146, 115, 255} ;
-    int startX = (windowSize - (m*cellSize)) / 2 + 400;
-    int startY = (windowSize - (n*cellSize)) / 2;
-    if(randomNum == 1){
-        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level1);
+void generate_random(int map[][17], int n, int m){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(map[i][j]!='c'&&map[i][j]!='v'&&map[i][j]!='b'&&map[i][j]!='x'){
+                map[i][j]= GetRandomValue(1,5);
+            }
+        }
     }
-    else if(randomNum == 2){
-        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level2);
+}
+void Runaway(int x1, int y1, int x2, int y2, int map[][17]){
+    int resultx=x2-x1;
+    int resulty=y2-y1;
+    if(resultx>0){
+        for(int i=x2;i<=x1;i--){
+            for(int y=y2;y<=y1;y--){
+
+            }
+        }
     }
-    else if(randomNum == 3){
-        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level3);
-    }
-    else if(randomNum == 4){
-        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level4);
-    }
-    else if(randomNum == 5){
-        DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, level5);
-    }
+
+
+
+
+
 
 }
 void drawCastle1(int x, int y, int n, int m) {
@@ -119,10 +117,10 @@ void Map(int map[][17],int n,int m) {
                 //printf("c1 ");
                 map[i][j] = 'c';
             }
-                else if(i == x2 && j == y2){
-                    //printf("c2 ");
-                    map[i][j] = 'b';
-                }
+            else if(i == x2 && j == y2){
+                //printf("c2 ");
+                map[i][j] = 'b';
+            }
             else if (map[i][j] == 0) {
                 //printf(" 1 ");
                 map[i][j] = 1;
