@@ -4,12 +4,13 @@
 
 // Function declarations (prototypes)
 void drawGrid();
-void drawColor();
 void drawCastle1();
 void drawCastle2();
 void drawVillage();
 void drawBlock();
 void Map();
+void generate_random();
+void way();
 // ... other declarations
 
 // Variable declarations (if global)
