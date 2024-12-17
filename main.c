@@ -26,6 +26,7 @@ int main(void) {
 
     int map[17][17]={0};
     Map(map, n, m);
+    generate_random(map, n, m);
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
 
@@ -67,8 +68,29 @@ int main(void) {
                 else if(map[i][j] == 'x'){
                     drawBlock(i, j, n, m);
                 }
-                else {
-                    drawColor(i, j, n, m);
+                else{
+                    Color level1 = (Color){0, 146, 115, 16 };
+                    Color level2 = (Color){0, 146, 115, 32} ;
+                    Color level3 = (Color){0, 146, 115, 64} ;
+                    Color level4 = (Color){0, 146, 115, 128} ;
+                    Color level5 = (Color){0, 146, 115, 255} ;
+                    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+                    int startY = (windowSize - (n*cellSize)) / 2;
+                    if(map[i][j]== 1){
+                        DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level1);
+                    }
+                    else if(map[i][j]== 2){
+                        DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level2);
+                    }
+                    else if(map[i][j]== 3){
+                        DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level3);
+                    }
+                    else if(map[i][j]== 4){
+                        DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level4);
+                    }
+                    else if(map[i][j]== 5){
+                        DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level5);
+                    }
                 }
             }
         }
