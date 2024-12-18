@@ -6,6 +6,14 @@
 const int windowSize=1050;
 const int cellSize=50;
 
+int villNum;
+
+typedef struct{
+    int x;
+    int y;
+}Point;
+
+Point villCordination[25];
 
 void drawGrid(int n, int m) {
     int startX = (windowSize - (m * cellSize)) / 2 + 400;
@@ -28,23 +36,7 @@ void generate_random(int map[][17], int n, int m){
         }
     }
 }
-void Runaway(int x1, int y1, int x2, int y2, int map[][17]){
-    int resultx=x2-x1;
-    int resulty=y2-y1;
-    if(resultx>0){
-        for(int i=x2;i<=x1;i--){
-            for(int y=y2;y<=y1;y--){
 
-            }
-        }
-    }
-
-
-
-
-
-
-}
 void drawCastle1(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
@@ -54,8 +46,8 @@ void drawCastle1(int x, int y, int n, int m) {
 void drawCastle2(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
-    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
-    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle2.png");
+    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, DARKPURPLE);
 }
 void drawVillage(int x, int y, int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
@@ -69,7 +61,7 @@ void drawBlock(int x, int y, int n, int m){
     Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
     DrawTexture(block, startX + x * cellSize, startY + y * cellSize, WHITE);
 }
-void Map(int map[][17],int n,int m) {
+void Map(int map[][17], int n, int m) {
     printf("number of castles(1 or 2): ");
     int castleNum, castle1, castle2;
     scanf("%d", &castleNum);                //get the number of castles
@@ -77,7 +69,8 @@ void Map(int map[][17],int n,int m) {
     if (castleNum == 1) {
         printf("castle 1 coordinations(x1, y1): ");        //get castles coordinates
         scanf("%d %d", &x1, &y1);
-    } else {
+    }
+    else {
         printf("castle 1 coordinations(x1, y1): ");
         printf("x1 y1 = ");
         scanf("%d %d", &x1, &y1);
@@ -86,13 +79,15 @@ void Map(int map[][17],int n,int m) {
         scanf("%d %d", &x2, &y2);
     }
     printf("Enter the number of village(max = 25): ");
-    int villNum;
+    //int villNum;
     scanf("%d", &villNum);
     for (int i = 0; i < villNum; i++) {
         int x, y;
         printf("Enter the coordination of village number %d: ", i + 1);
         scanf("%d %d", &x, &y);
         map[x - 1][y - 1] = 'v';
+        villCordination[i].x = x - 1;
+        villCordination[i].y = y - 1;
     }
     int gold[25], food[25];
     for (int i = 0; i < villNum; i++) {
@@ -117,7 +112,7 @@ void Map(int map[][17],int n,int m) {
                 //printf("c1 ");
                 map[i][j] = 'c';
             }
-            else if(i == x2 && j == y2){
+            else if(i + 1 == x2 && j + 1 == y2){
                 //printf("c2 ");
                 map[i][j] = 'b';
             }
