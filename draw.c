@@ -1,29 +1,44 @@
 #include "raylib.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-const int windowSize=800;
-const int cellSize=40;
+const int windowSize=1050;
+const int cellSize=50;
 
-void drawGrid(int n, int m){
-    int startX = (windowSize - (m*cellSize)) / 2 + 400;
-    int startY = (windowSize - (n*cellSize)) / 2;
-    for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, LIGHTGRAY);
-            DrawRectangleLines(startX + j*cellSize, startY + i*cellSize, cellSize, cellSize, DARKGRAY);
+
+void drawGrid(int n, int m) {
+    int startX = (windowSize - (m * cellSize)) / 2 + 400;
+    int startY = (windowSize - (n * cellSize)) / 2;
+    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    DrawTexture(background, 0, 0, WHITE);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++){
+            //DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, LIGHTGRAY);
+            DrawRectangleLines(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, DARKGRAY);
         }
     }
 }
-void drawColor(int x, int y, int n, int m){    //x and y are chosen by user and this function will change the color of that position.
-    int startX = (windowSize - (m*cellSize)) / 2 + 400;
-    int startY = (windowSize - (n*cellSize)) / 2;
-    DrawRectangle(startX + x*cellSize, startY + y*cellSize, cellSize-2, cellSize-2, RED);
+void generate_random(int map[][17], int n, int m){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(map[i][j]!='c'&&map[i][j]!='v'&&map[i][j]!='b'&&map[i][j]!='x'){
+                map[i][j]= GetRandomValue(1,5);
+            }
+        }
+    }
 }
-void drawCastle(int x, int y, int n, int m) {
+void drawCastle1(int x, int y, int n, int m) {
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
-    Texture2D castle= LoadTexture("C://Users//M//CLionProjects//elysian1//pics//castle.png");
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
     DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, WHITE);
+}
+void drawCastle2(int x, int y, int n, int m) {
+    int startX = (windowSize - (m*cellSize)) / 2 + 400;
+    int startY = (windowSize - (n*cellSize)) / 2;
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
+    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
 }
 void drawVillage(int x, int y, int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
@@ -34,10 +49,10 @@ void drawVillage(int x, int y, int n, int m){
 void drawBlock(int x, int y, int n, int m){
     int startX = (windowSize - (m*cellSize)) / 2 + 400;
     int startY = (windowSize - (n*cellSize)) / 2;
-    Texture2D block = LoadTexture("C://Users//M//CLionProjects//elysian1//pics//blouk (2).png");
+    Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
     DrawTexture(block, startX + x * cellSize, startY + y * cellSize, WHITE);
 }
-void Map(int map[][17],int n,int m){
+void Map(int map[][17],int n,int m) {
     printf("number of castles(1 or 2): ");
     int castleNum, castle1, castle2;
     scanf("%d", &castleNum);                //get the number of castles
@@ -47,11 +62,13 @@ void Map(int map[][17],int n,int m){
         scanf("%d %d", &x1, &y1);
     } else {
         printf("castle 1 coordinations(x1, y1): ");
+        printf("x1 y1 = ");
         scanf("%d %d", &x1, &y1);
         printf("castle 2 coordinations(x2, y2): ");
+        printf("x2 y2= ");
         scanf("%d %d", &x2, &y2);
     }
-    printf("Enter the number of village(max = 20): ");
+    printf("Enter the number of village(max = 25): ");
     int villNum;
     scanf("%d", &villNum);
     for (int i = 0; i < villNum; i++) {
@@ -60,11 +77,12 @@ void Map(int map[][17],int n,int m){
         scanf("%d %d", &x, &y);
         map[x - 1][y - 1] = 'v';
     }
-    int gold[20], food[20];
+    int gold[25], food[25];
     for (int i = 0; i < villNum; i++) {
-        printf("Enter the amount gold and food for village number %d: ", i + 1);
+        printf("Enter the gold and food for village number %d: ", i + 1);
         scanf("%d %d", &gold[i], &food[i]);
     }
+
     printf("Enter the number of block: ");
     int blockNum;
     scanf("%d", &blockNum);
@@ -74,20 +92,30 @@ void Map(int map[][17],int n,int m){
         scanf("%d %d", &x, &y);
         map[x - 1][y - 1] = 'x';
     }
+
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (i + 1 == x1 && j + 1 == y1) {
                 //printf("c1 ");
                 map[i][j] = 'c';
             }
-                /*else if(i == x2 && j == y2){
-                    printf("c2 ");
-                    map[i][j] = 'b';
-                }*/
+            else if(i == x2 && j == y2){
+                //printf("c2 ");
+                map[i][j] = 'b';
+            }
             else if (map[i][j] == 0) {
                 //printf(" 1 ");
                 map[i][j] = 1;
             }
         }
+        printf("\n");
+    }
+    printf("\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf(" %d ", map[i][j]);
+        }
+        printf("\n");
     }
 }
