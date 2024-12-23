@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.30)
-project(elysian C)
+cmake_minimum_required(VERSION 3.11)
+project(test1 C)
 
 set(CMAKE_C_STANDARD 11)
 
-#add_executable(elysian main.c)
+#add_executable(test1 main.c)
 
 #acmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
 #project(example)
@@ -31,7 +31,9 @@ endif()
 
 # Our Project
 
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} main.c
+        main.c draw.c draw.h
+        ../test1/draw.c)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 
