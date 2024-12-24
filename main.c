@@ -5,28 +5,23 @@
 #include "draw.h"
 
 
-const int maxRow = 17;
-const int maxCol = 17;
-//const int cellSize = 50;
-//const int windowSize = 1050;
-//int startX = (windowSize - (maxCol*cellSize)) / 2 + 400;
-//int startY = (windowSize - (maxRow*cellSize)) / 2;
+
 
 
 
 
 int main(void) {
     //*********************************************************************************************************
-    int n, m;
+    //int n, m;
     printf("Enter the dimensions of the game:(it will be a n*m table)\n");
     printf("n = ");
     scanf("%d", &n); //get the table row num
     printf("m = ");
     scanf("%d", &m); //get the table column num
 
-    int map[17][17]={0};
-    Map(map, n, m);
-    generate_random(map, n, m);
+    //int map[17][17]={0};
+    Map();
+    generate_random();
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
 
@@ -50,32 +45,35 @@ int main(void) {
 
         //ClearBackground(RAYWHITE);
         //draw table
-        drawGrid(n,m);
+        drawGrid();
         //DrawText("Elysian!", 850, 20, 80, DARKBLUE);
+
+        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
 
         //Draw the icons in the main window
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m ; j++){
                 if(map[i][j] == 'c'){
-                    drawCastle1(i, j, n, m);
+                    drawCastle1(i, j);
                 }
                 else if(map[i][j] == 'b'){
-                    drawCastle2(i, j, n, m);
+                    drawCastle2(i, j);
                 }
                 else if(map[i][j] == 'v'){
-                    drawVillage(i, j, n, m);
+                    drawVillage(i, j);
                 }
                 else if(map[i][j] == 'x'){
-                    drawBlock(i, j, n, m);
+                    drawBlock(i, j);
+                }
+                else if(map[i][j] == 'r'){
+                    DrawRectangle(startX + i * cellSize, startY + j * cellSize, cellSize - 2, cellSize - 2, RED);
                 }
                 else{
-                    Color level1 = (Color){0, 146, 115, 16 };
-                    Color level2 = (Color){0, 146, 115, 32} ;
-                    Color level3 = (Color){0, 146, 115, 64} ;
-                    Color level4 = (Color){0, 146, 115, 128} ;
-                    Color level5 = (Color){0, 146, 115, 255} ;
-                    int startX = (windowSize - (m*cellSize)) / 2 + 400;
-                    int startY = (windowSize - (n*cellSize)) / 2;
+                    Color level1 = (Color){0, 146, 115, 16};
+                    Color level2 = (Color){0, 146, 115, 32};
+                    Color level3 = (Color){0, 146, 115, 64};
+                    Color level4 = (Color){0, 146, 115, 128};
+                    Color level5 = (Color){0, 146, 115, 255};
                     if(map[i][j]== 1){
                         DrawRectangle(startX + i*cellSize, startY + j*cellSize, cellSize-2, cellSize-2, level1);
                     }
@@ -94,6 +92,7 @@ int main(void) {
                 }
             }
         }
+
 
         EndDrawing();
 
