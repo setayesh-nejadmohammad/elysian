@@ -17,11 +17,6 @@ int startY;
 const int windowSize=1050;
 const int cellSize=50;
 
-// OUR Lovely STRUCTS:
-typedef struct{
-    int x;
-    int y;
-}Point;
 
 void drawGrid() {
     Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
@@ -129,12 +124,4 @@ void Map() {
         }
         printf("\n");
     }
-}
-
-void way(){
-    int x, y;
-    Vector2 mousePos = GetMousePosition();
-    x = (mousePos.x-startX)/50;
-    y = (mousePos.y-startY)/50;
-    map[x][y] = 'r';
 }

@@ -13,15 +13,6 @@ void generate_random();
 void way();
 // ... other declarations
 
-// Struct declarations
-
-typedef struct{
-    int x;
-    int y;
-}Point;
-
-
-
 // Variable declarations (if global)
 extern int windowSize;  // Declare as extern to indicate it's defined elsewhere
 extern int cellSize;
