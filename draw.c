@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "info.h"
+
 
 const int maxRow = 17;
 const int maxCol = 17;
@@ -14,9 +16,17 @@ int castleNum;
 int startX;
 int startY;
 
+kingdom k1, k2;
+village v[25];
+
 const int windowSize=1050;
 const int cellSize=50;
 
+// OUR Lovely STRUCTS:
+typedef struct{
+    int x;
+    int y;
+}Point;
 
 void drawGrid() {
     Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
@@ -59,6 +69,20 @@ void Map() {
     startX = (windowSize - (m * cellSize)) / 2 + 400;
     startY = (windowSize - (n * cellSize)) / 2;
 
+    k1.gold = 5;
+    k1.worker = 1;
+    k1.food = 0;
+    k1.soldier = 0;
+    k1.goldProduction = 1;
+    k1.foodProduction = 0;
+
+    k2.gold = 5;
+    k2.worker = 1;
+    k2.food = 0;
+    k2.soldier = 0;
+    k2.goldProduction = 1;
+    k2.foodProduction = 0;
+
     printf("number of castles(1 or 2): ");
     int castle1, castle2;
     scanf("%d", &castleNum);                //get the number of castles
@@ -66,13 +90,19 @@ void Map() {
     if (castleNum == 1) {
         printf("castle 1 coordinations(x1, y1): ");        //get castles coordinates
         scanf("%d %d", &x1, &y1);
+        k1.x = x1 - 1;
+        k1.y = y1 - 1;
     } else {
         printf("castle 1 coordinations(x1, y1): ");
         printf("x1 y1 = ");
         scanf("%d %d", &x1, &y1);
+        k1.x = x1;
+        k1.y = y1;
         printf("castle 2 coordinations(x2, y2): ");
         printf("x2 y2= ");
         scanf("%d %d", &x2, &y2);
+        k2.x = x2 - 1;
+        k2.y = y2 - 1;
     }
     printf("Enter the number of village(max = 25): ");
 
@@ -83,10 +113,10 @@ void Map() {
         scanf("%d %d", &x, &y);
         map[x - 1][y - 1] = 'v';
     }
-    int gold[25], food[25];
+
     for (int i = 0; i < villNum; i++) {
         printf("Enter the gold and food for village number %d: ", i + 1);
-        scanf("%d %d", &gold[i], &food[i]);
+        scanf("%d %d", &v[i].goldRate, &v[i].foodRate);
     }
 
     printf("Enter the number of block: ");
@@ -103,15 +133,12 @@ void Map() {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (i + 1 == x1 && j + 1 == y1) {
-                //printf("c1 ");
                 map[i][j] = 'c';
             }
             else if(i + 1 == x2 && j + 1 == y2){
-                //printf("c2 ");
                 map[i][j] = 'b';
             }
             else if (map[i][j] == 0) {
-                //printf(" 1 ");
                 map[i][j] = 1;
             }
         }
@@ -124,4 +151,39 @@ void Map() {
         }
         printf("\n");
     }
+}
+
+void way(){
+    int x, y;
+    Vector2 mousePos = GetMousePosition();
+    x = (mousePos.x-startX)/50;
+    y = (mousePos.y-startY)/50;
+    map[x][y] = 'r';
+}
+
+void drawInformation(int Round){
+    char RoundS[5];
+    sprintf(RoundS, "%d", Round);  // Convert int to string
+
+    DrawText("Round: ", 800, 20, 40, DARKBLUE);
+    DrawText(RoundS, 950, 20, 40, DARKBLUE);
+    //DrawTexture(RoundGuide, 1500, 400, WHITE);
+
+
+    char s[5];
+    sprintf(s, "%d", k1.food);
+    DrawText("k1.food: ", 10, 200, 40, DARKBLUE);
+    DrawText(s, 210, 200, 40, DARKBLUE);
+
+    sprintf(s, "%d", k1.gold);
+    DrawText("k1.gold: ", 10, 300, 40, DARKBLUE);
+    DrawText(s, 210, 300, 40, DARKBLUE);
+
+    sprintf(s, "%d", k1.worker);
+    DrawText("k1.worker: ", 10, 400, 40, DARKBLUE);
+    DrawText(s, 210, 400, 40, DARKBLUE);
+
+    sprintf(s, "%d", k1.soldier);
+    DrawText("k1.soldier: ", 10, 500, 40, DARKBLUE);
+    DrawText(s, 210, 500, 40, DARKBLUE);
 }
