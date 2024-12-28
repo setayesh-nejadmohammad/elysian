@@ -5,13 +5,7 @@
 
 
 void update(){
-    k1.gold ++;
-    for(int i = 0; i < villNum; i++){
-        if(!v[i].free){
-            k1.goldProduction += v[i].goldRate;
-            k1.foodProduction += v[i].foodRate;
-        }
-    }
+    k1.gold += k1.goldProduction;
 }
 
 void buyFood(){
