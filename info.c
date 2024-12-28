@@ -4,32 +4,38 @@
 #include "info.h"
 
 
-void update(kingdom k1){
+void update(){
     k1.gold ++;
+    for(int i = 0; i < villNum; i++){
+        if(!v[i].free){
+            k1.goldProduction += v[i].goldRate;
+            k1.foodProduction += v[i].foodRate;
+        }
+    }
 }
 
-void buyFood(kingdom k){
+void buyFood(){
     if(k1.gold>=1){
         k1.food++;
         k1.gold--;
     }
 }
-void getWorker(kingdom k){
+void getWorker(){
     if(k1.food>=3){
         k1.food=(k1.food)-3;
         k1.worker++;
     }
 }
-void getSoldier(kingdom k){
+void getSoldier(){
     if(k1.gold>=2){
         k1.gold=(k1.gold)-2;
         k1.soldier++;
     }
 }
 bool round(kingdom k) {
-    update(k1);
+    update(k);
     if (IsKeyPressed(KEY_ONE)) {
-        if(k1.gold>=1) {
+        if(k.gold>=1) {
             return true;
         }
         else {
@@ -38,8 +44,8 @@ bool round(kingdom k) {
     }
     // draw something to say you cant do this round.
     if(IsKeyPressed(KEY_TWO)){
-        if(k1.food>=3){
-            getWorker(k1);
+        if(k.food>=3){
+            getWorker(k);
             return true;
         }
         else {
@@ -47,8 +53,8 @@ bool round(kingdom k) {
         }
     }
     if(IsKeyPressed(KEY_THREE)){
-        if(k1.gold>=2){
-            getSoldier(k1);
+        if(k.gold>=2){
+            getSoldier(k);
             return true;
         }
         else {
