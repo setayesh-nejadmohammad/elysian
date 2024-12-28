@@ -23,13 +23,16 @@ typedef struct{
     int gold;
     int soldier;
     int worker;
+    int goldProduction;
+    int foodProduction;
 }kingdom;
 
 
 typedef struct{
     int x,y;
-    bool free;
-    bool taken;
+    bool free;   // This will check if a village is free(free = true) or taken(free = false) by a kingdom
+    int foodRate;
+    int goldRate;
 }village;
 
 
