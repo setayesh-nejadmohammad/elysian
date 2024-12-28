@@ -46,7 +46,11 @@ int main(void) {
         drawGrid();
         //DrawText("Elysian!", 850, 20, 80, DARKBLUE);
 
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
+        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
+            update();
+            Round++;
+        }
 
         //Draw the icons in the main window
         for(int i = 0; i<n; i++){
@@ -107,8 +111,11 @@ int main(void) {
             update();
             Round++;
         }
-        //if(IsKeyPressed(KEY_FOUR)){}
-        DrawTexture(RoundGuide, 1500, 400, WHITE);
+        if(IsKeyPressed(KEY_FOUR)){ //This Round will do NOTHING. :/
+            update();
+            Round++;
+        }
+
         drawInformation(Round);  //define in draw.c
 
 
