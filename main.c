@@ -93,33 +93,23 @@ int main(void) {
 
 
         if(IsKeyPressed(KEY_ONE)){
+            buyFood();
+            update();
             Round++;
         }
-
-        char RoundS[5];
-        sprintf(RoundS, "%d", Round);  // Convert int to string
-
-        DrawText("Round: ", 800, 20, 40, DARKBLUE);
-        DrawText(RoundS, 950, 20, 40, DARKBLUE);
+        if(IsKeyPressed(KEY_TWO)){
+            getWorker();
+            update();
+            Round++;
+        }
+        if(IsKeyPressed(KEY_THREE)){
+            getSoldier();
+            update();
+            Round++;
+        }
+        //if(IsKeyPressed(KEY_FOUR)){}
         DrawTexture(RoundGuide, 1500, 400, WHITE);
-
-
-        char s[5];
-        sprintf(s, "%d", k1.food);
-        DrawText("k1.food: ", 10, 200, 40, DARKBLUE);
-        DrawText(s, 210, 200, 40, DARKBLUE);
-
-        sprintf(s, "%d", k1.gold);
-        DrawText("k1.gold: ", 10, 300, 40, DARKBLUE);
-        DrawText(s, 210, 300, 40, DARKBLUE);
-
-        sprintf(s, "%d", k1.worker);
-        DrawText("k1.worker: ", 10, 400, 40, DARKBLUE);
-        DrawText(s, 210, 400, 40, DARKBLUE);
-
-        sprintf(s, "%d", k1.soldier);
-        DrawText("k1.soldier: ", 10, 500, 40, DARKBLUE);
-        DrawText(s, 210, 500, 40, DARKBLUE);
+        drawInformation(Round);  //define in draw.c
 
 
         EndDrawing();
