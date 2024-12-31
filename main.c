@@ -26,7 +26,7 @@ int main(void) {
 
     SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
 
-    Texture2D RoundGuide = LoadTexture("D:/git projects/elysian/pics/RoundGuide.png");
+    //Texture2D RoundGuide = LoadTexture("D:/git projects/elysian/pics/RoundGuide.png");
 
     //--------------------------------------------------------------------------------------
 
@@ -122,6 +122,8 @@ int main(void) {
         EndDrawing();
 
     }
+
+    UnloadTexture();
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
