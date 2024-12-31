@@ -90,13 +90,13 @@ void Map() {
     scanf("%d", &castleNum);                //get the number of castles
     int x1, y1, x2, y2;
     if (castleNum == 1) {
-        printf("castle 1 coordinations(x1, y1): ");        //get castles coordinates
+    printf("castle 1 coordinations(x1, y1): ");        //get castles coordinates
         scanf("%d %d", &x1, &y1);
         k1.x = x1 - 1;
         k1.y = y1 - 1;
     } else {
-        printf("castle 1 coordinations(x1, y1): ");
-        printf("x1 y1 = ");
+    printf("castle 1 coordinations(x1, y1): ");
+    printf("x1 y1 = ");
         scanf("%d %d", &x1, &y1);
         k1.x = x1;
         k1.y = y1;
@@ -111,7 +111,7 @@ void Map() {
     scanf("%d", &villNum);
     for (int i = 0; i < villNum; i++) {
         int x, y;
-        printf("Enter the coordination of village number %d: ", i + 1);
+    printf("Enter the coordination of village number %d: ", i + 1);
         scanf("%d %d", &x, &y);
         map[x - 1][y - 1] = 'v';
         v[i].x = x - 1;
@@ -120,7 +120,7 @@ void Map() {
     }
 
     for (int i = 0; i < villNum; i++) {
-        printf("Enter the gold and food for village number %d: ", i + 1);
+    printf("Enter the gold and food for village number %d: ", i + 1);
         scanf("%d %d", &v[i].goldRate, &v[i].foodRate);
     }
 
@@ -178,7 +178,7 @@ void way(){
     y = (mousePos.y-startY)/50;
     if(map[x][y] != 'x' && map[x][y] != 'v' && map[x][y] != 'c' && map[x][y] != 'b'){
         if(k1.worker >= map[x][y]){
-            k1.worker -= map[x][y];
+            //k1.worker -= map[x][y];
             map[x][y] = 'r';
             wayCheck(x, y);
         }
@@ -188,15 +188,16 @@ void way(){
     }
 }
 
-void drawInformation(int Round){
+void drawInformation(int Round) {
+
+    //..........................  Round Counter .....................................................
     char RoundS[5];
     sprintf(RoundS, "%d", Round);  // Convert int to string
-
     DrawText("Round: ", 800, 20, 40, DARKBLUE);
     DrawText(RoundS, 950, 20, 40, DARKBLUE);
-    //DrawTexture(RoundGuide, 1500, 400, WHITE);
+    //................................................................................................
 
-
+    //.......................... kingdom 1 information ...............................................
     char s[5];
     sprintf(s, "%d", k1.food);
     DrawText("k1.food: ", 10, 200, 40, DARKBLUE);
@@ -221,11 +222,35 @@ void drawInformation(int Round){
     sprintf(s, "%d", k1.foodProduction);
     DrawText("k1.food Production: ", 10, 700, 40, DARKBLUE);
     DrawText(s, 400, 700, 40, DARKBLUE);
+    //.................................................................................................
 
-    //.............................  Round Guide  ..........................................
-    DrawText("key 1  >> buyFood ",1600,60,30,DARKBLUE);
-    DrawText("key 2 >> getWorker ",1600,90,30,DARKBLUE);
-    DrawText("key 3 >> getSoldier ",1600,120,30,DARKBLUE);
-    DrawText("click on the cell you want >> makeRoad",1300,30,30,DARKBLUE);
-    DrawText("key 4 >> doNothing ",1600,150,30,DARKBLUE);
+
+    //.....................................  Round Guide  ..............................................
+    DrawText("key 1  >> buyFood ", 1600, 60, 30, DARKBLUE);
+    DrawText("key 2 >> getWorker ", 1600, 90, 30, DARKBLUE);
+    DrawText("key 3 >> getSoldier ", 1600, 120, 30, DARKBLUE);
+    DrawText("click on the cell you want >> makeRoad", 1300, 30, 30, DARKBLUE);
+    DrawText("key 4 >> doNothing ", 1600, 150, 30, DARKBLUE);
+    //...................................................................................................
+
+    //....................... Color introduction (difficulty level) .....................................
+    Color level1 = (Color){0, 146, 115, 16};
+    Color level2 = (Color){0, 146, 115, 32};
+    Color level3 = (Color){0, 146, 115, 64};
+    Color level4 = (Color){0, 146, 115, 128};
+    Color level5 = (Color){0, 146, 115, 255};
+    DrawText("Hardest", 1550, 450, 30, DARKBLUE);
+    DrawRectangle(1600, 520, cellSize-2, cellSize-2, level5);
+    DrawRectangle(1600, 570, cellSize-2, cellSize-2, level4);
+    DrawRectangle(1600, 620, cellSize-2, cellSize-2, level3);
+    DrawRectangle(1600, 670, cellSize-2, cellSize-2, level2);
+    DrawRectangle(1600, 720, cellSize-2, cellSize-2, level1);
+    DrawText("Easiest", 1550, 770, 30, DARKBLUE);
+    DrawText("Number of\nneeded workers", 1700, 450, 27, DARKBLUE);
+    DrawText(" --->  5", 1650, 520, 30, DARKBLUE);
+    DrawText(" --->  4", 1650, 570, 30, DARKBLUE);
+    DrawText(" --->  3", 1650, 620, 30, DARKBLUE);
+    DrawText(" --->  2", 1650, 670, 30, DARKBLUE);
+    DrawText(" --->  1", 1650, 720, 30, DARKBLUE);
+    //................................................................................................
 }
