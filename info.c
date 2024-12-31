@@ -6,6 +6,7 @@
 
 void update(){
     k1.gold += k1.goldProduction;
+    k1.food += k1.foodProduction;
 }
 
 void buyFood(){
@@ -22,10 +23,11 @@ void getWorker(){
 }
 void getSoldier(){
     if(k1.gold>=2){
-        k1.gold=(k1.gold)-2;
+        k1.gold -= 2;
         k1.soldier++;
     }
 }
+
 bool round(kingdom k) {
     update(k);
     if (IsKeyPressed(KEY_ONE)) {
