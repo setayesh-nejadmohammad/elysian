@@ -12,16 +12,13 @@ void drawVillage();
 void drawBlock();
 void Map();
 void generate_random();
-void way();
+bool Way();
 void drawInformation();
 // ... other declarations
 
 // Struct declarations
 
-typedef struct{
-    int x;
-    int y;
-}Point;
+
 
 
 
