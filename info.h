@@ -12,10 +12,11 @@ void buyFood();
 void getWorker();
 void getSoldier();
 void update();
-bool round();
 
-
-
+typedef struct{
+    int x;
+    int y;
+}Point;
 
 typedef struct{
     int x,y;
@@ -25,6 +26,8 @@ typedef struct{
     int worker;
     int goldProduction;
     int foodProduction;
+    Point road[100];
+    int roadCount;
 }kingdom;
 
 
