@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "info.h"
+#include <stdbool.h>
 
 
 
@@ -25,10 +26,8 @@ const int windowSize=1050;
 const int cellSize=50;
 
 // OUR Lovely STRUCTS:
-typedef struct{
-    int x;
-    int y;
-}Point;
+
+
 
 void drawGrid() {
     Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
@@ -43,10 +42,16 @@ void drawGrid() {
 void generate_random(){
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
-            if(map[i][j] != 'c' && map[i][j] != 'v' && map[i][j] != 'b' && map[i][j] != 'x'){
+            if(map[i][j] == 0){
                 map[i][j]= GetRandomValue(1,5);
             }
         }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++){
+            printf(" %d ",map[i][j]);
+        }
+        printf("\n");
     }
 }
 
@@ -55,8 +60,8 @@ void drawCastle1(int y, int x) {
     DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
 }
 void drawCastle2(int y, int x) {
-    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
-    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle2.png");
+    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, DARKPURPLE);
 }
 void drawVillage(int y, int x){
     Texture2D village = LoadTexture("D://git projects//elysian//pics//village.png");
@@ -77,6 +82,7 @@ void Map() {
     k1.soldier = 0;
     k1.goldProduction = 1;
     k1.foodProduction = 0;
+    k1.roadCount = 0;
 
     k2.gold = 5;
     k2.worker = 1;
@@ -84,6 +90,7 @@ void Map() {
     k2.soldier = 0;
     k2.goldProduction = 1;
     k2.foodProduction = 0;
+    k2.roadCount = 0;
 
     printf("number of castles(1 or 2): ");
     int castle1, castle2;
@@ -98,11 +105,14 @@ void Map() {
     printf("castle 1 coordinations(x1, y1): ");
     printf("x1 y1 = ");
         scanf("%d %d", &x1, &y1);
-        k1.x = x1;
-        k1.y = y1;
+        k1.x = x1 - 1;
+        k1.y = y1 - 1;
         printf("castle 2 coordinations(x2, y2): ");
-        printf("x2 y2= ");
         scanf("%d %d", &x2, &y2);
+        while(x2 == x1 && y2 == y1){
+            printf("castle 2 coordinations(x2, y2): ");
+            scanf("%d %d", &x2, &y2);
+        }
         k2.x = x2 - 1;
         k2.y = y2 - 1;
     }
@@ -113,6 +123,10 @@ void Map() {
         int x, y;
     printf("Enter the coordination of village number %d: ", i + 1);
         scanf("%d %d", &x, &y);
+        while(x==x1 && y==y1 || x==x2 && y==y2){
+            printf("Enter the coordination of village number %d: ", i + 1);
+            scanf("%d %d", &x, &y);
+        }
         map[x - 1][y - 1] = 'v';
         v[i].x = x - 1;
         v[i].y = y - 1;
@@ -131,7 +145,38 @@ void Map() {
         int x, y;
         printf("Enter the coordanation of block number %d: ", i + 1);
         scanf("%d %d", &x, &y);
-        map[x - 1][y - 1] = 'x';
+        x--;
+        y--;
+        bool flag = true; // input is write
+
+        // check if the input is not write?
+        if(x == k1.x && y == k1.y || x == k2.x && y == k2.y){
+            flag = false;
+        }
+        for(int j = 0; j < villNum; j++){
+            if(x == v[j].x && y == v[j].y){
+                flag = false;
+                break;
+            }
+        }
+        while(!flag){
+            printf("Enter the coordanation of block number %d: ", i + 1);
+            scanf("%d %d", &x, &y);
+            x--;
+            y--;
+            flag = true;
+            if(x == k1.x && y == k1.y || x == k2.x && y == k2.y){
+                flag = false;
+                continue;
+            }
+            for(int j = 0; j < villNum; j++){
+                if(x == v[j].x && y == v[j].y){
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        map[x][y] = 'x';
     }
 
 
@@ -142,9 +187,6 @@ void Map() {
             }
             else if(i + 1 == x2 && j + 1 == y2){
                 map[i][j] = 'b';
-            }
-            else if (map[i][j] == 0) {
-                map[i][j] = 1;
             }
         }
         printf("\n");
@@ -171,21 +213,31 @@ void wayCheck(int x,int y){
         }
     }
 }
-void way(){
+bool Way(){
     int x, y;
     Vector2 mousePos = GetMousePosition();
-    x = (mousePos.x-startX)/50;
-    y = (mousePos.y-startY)/50;
-    if(map[x][y] != 'x' && map[x][y] != 'v' && map[x][y] != 'c' && map[x][y] != 'b'){
-        if(k1.worker >= map[x][y]){
-            //k1.worker -= map[x][y];
-            map[x][y] = 'r';
-            wayCheck(x, y);
-        }
-        else{
-            DrawText("You don't have enough worker!", 650, 820, 40, RED);
+    y = (mousePos.x-startX)/50;
+    x = (mousePos.y-startY)/50;
+    if(y == k1.x + 1 && x == k1.y || y == k1.x && x == k1.y + 1 || y == k1.x - 1 && x == k1.y || y == k1.x && x == k1.y - 1
+    || map[x][y-1] == 'r' || map[x-1][y] == 'r' || map[x+1][y] == 'r' || map[x][y+1] == 'r'){
+        if(map[x][y] != 'x' && map[x][y] != 'v' && map[x][y] != 'c' && map[x][y] != 'b'){
+            if(k1.worker >= map[x][y]){
+                k1.road[k1.roadCount].x = x;
+                k1.road[k1.roadCount].y = y;
+                k1.roadCount++;
+                //k1.worker -= map[x][y];
+                map[x][y] = 'r';
+                wayCheck(x, y);
+            }
+            else if(map[x][y] != 'r'){
+                map[x][y] -= k1.worker;
+                DrawText("You don't have enough worker!", 650, 820, 40, RED);
+            }
+            return true;
         }
     }
+
+    return false;
 }
 
 void drawInformation(int Round) {
