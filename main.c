@@ -30,15 +30,25 @@ int main(void) {
 
     //--------------------------------------------------------------------------------------
 
+    bool endGame = true;
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose() && endGame)    // Detect window close button or ESC key
     {
         BeginDrawing();
 
         ClearBackground(GRAY);
 
+        Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+        DrawTexture(background, 0, 0, WHITE);
+
         //DrawTexture(duck,100,100,WHITE);
 
+        if(UntakenVills == 0) {
+            DrawText("YOU WIN!", 500, 400, 200, DARKPURPLE);
+            EndDrawing();
+            WaitTime(3);
+            endGame = false;
+        }
 
 
         //ClearBackground(RAYWHITE);
@@ -46,22 +56,7 @@ int main(void) {
         drawGrid();
         //DrawText("Elysian!", 850, 20, 80, DARKBLUE);
 
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            //way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
-            if(Way()){
-                update();
-                Round++;
-            }
-            else{
-                DrawText("You can't make road here!", 650, 820, 40, RED);
-            }
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    printf(" %d ", map[i][j]);
-                }
-                printf("\n");
-            }
-        }
+
 
         //Draw the icons in the main window
         for(int i = 0; i<n; i++){
@@ -106,6 +101,29 @@ int main(void) {
             }
         }
 
+        drawInformation(Round);  //define in draw.c
+
+
+        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            //way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
+            if(Way()){
+                update();
+                Round++;
+            }
+            else{
+                DrawText("You can't make road here!", 650, 820, 40, RED);
+                EndDrawing();
+                WaitTime(2);
+            }
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    printf(" %d ", map[i][j]);
+                }
+                printf("\n");
+            }
+        }
+
+
 
         if(IsKeyPressed(KEY_ONE)){
             buyFood();
@@ -127,11 +145,10 @@ int main(void) {
             Round++;
         }
 
-        drawInformation(Round);  //define in draw.c
+
 
 
         EndDrawing();
-
     }
 
 
