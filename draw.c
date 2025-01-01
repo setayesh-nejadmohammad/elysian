@@ -4,6 +4,7 @@
 #include <time.h>
 #include "info.h"
 #include <stdbool.h>
+#include <unistd.h>
 
 
 
@@ -18,6 +19,7 @@ int villNum; //Number of villages
 int castleNum;
 int startX;
 int startY;
+int UntakenVills;
 
 kingdom k1, k2;
 village v[25];
@@ -25,13 +27,9 @@ village v[25];
 const int windowSize=1050;
 const int cellSize=50;
 
-// OUR Lovely STRUCTS:
-
-
-
 void drawGrid() {
-    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
-    DrawTexture(background, 0, 0, WHITE);
+    /*Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    DrawTexture(background, 0, 0, WHITE);*/
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++){
             //DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, LIGHTGRAY);
@@ -91,6 +89,7 @@ void Map() {
     k2.goldProduction = 1;
     k2.foodProduction = 0;
     k2.roadCount = 0;
+    k2.x = k2.y = -1;
 
     printf("number of castles(1 or 2): ");
     int castle1, castle2;
@@ -102,8 +101,7 @@ void Map() {
         k1.x = x1 - 1;
         k1.y = y1 - 1;
     } else {
-    printf("castle 1 coordinations(x1, y1): ");
-    printf("x1 y1 = ");
+        printf("castle 1 coordinations(x1, y1): ");
         scanf("%d %d", &x1, &y1);
         k1.x = x1 - 1;
         k1.y = y1 - 1;
@@ -117,19 +115,44 @@ void Map() {
         k2.y = y2 - 1;
     }
     printf("Enter the number of village(max = 25): ");
-
     scanf("%d", &villNum);
+    UntakenVills = villNum;
     for (int i = 0; i < villNum; i++) {
         int x, y;
-    printf("Enter the coordination of village number %d: ", i + 1);
+        printf("Enter the coordination of village number %d: ", i + 1);
         scanf("%d %d", &x, &y);
-        while(x==x1 && y==y1 || x==x2 && y==y2){
+        x--;
+        y--;
+        bool flag = true;
+        if (x == k1.x && y == k1.y || x == k2.x && y == k2.y) {
+            flag = false;
+        }
+        for (int j = i - 1; j >=0  ; j--) {
+            if (x == v[j].x && y == v[j].y) {
+                flag = false;
+                break;
+            }
+        }
+        while (!flag) {
             printf("Enter the coordination of village number %d: ", i + 1);
             scanf("%d %d", &x, &y);
+            x--;
+            y--;
+            flag = true;
+            if (x == k1.x && y == k1.y || x == k2.x && y == k2.y) {
+                flag = false;
+                continue;
+            }
+            for (int j = i - 1; j >= 0 ; j--) {
+                if (x == v[j].x && y == v[j].y) {
+                    flag = false;
+                    break;
+                }
+            }
         }
-        map[x - 1][y - 1] = 'v';
-        v[i].x = x - 1;
-        v[i].y = y - 1;
+        map[x][y] = 'v';
+        v[i].x = x;
+        v[i].y = y;
         v[i].free = true;
     }
 
@@ -204,8 +227,9 @@ void wayCheck(int x,int y){
     if(map[x][y]=='r'){
         if(map[x-1][y]=='v' || map[x+1][y]=='v' || map[x][y-1]=='v' || map[x][y+1]=='v'){
             for(int i=0;i<villNum;i++){
-                if(x-1==v[i].x && y==v[i].y || x+1==v[i].x && y==v[i].y || x==v[i].x && y-1==v[i].y || y+1==v[i].y && x==v[i].x){
+                if((x-1==v[i].x && y==v[i].y || x+1==v[i].x && y==v[i].y || x==v[i].x && y-1==v[i].y || y+1==v[i].y && x==v[i].x ) && v[i].free != false){
                     v[i].free = false;
+                    UntakenVills -= 1;
                     k1.goldProduction += v[i].goldRate;
                     k1.foodProduction += v[i].foodRate;
                 }
@@ -218,7 +242,7 @@ bool Way(){
     Vector2 mousePos = GetMousePosition();
     y = (mousePos.x-startX)/50;
     x = (mousePos.y-startY)/50;
-    if(y == k1.x + 1 && x == k1.y || y == k1.x && x == k1.y + 1 || y == k1.x - 1 && x == k1.y || y == k1.x && x == k1.y - 1
+    if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1
     || map[x][y-1] == 'r' || map[x-1][y] == 'r' || map[x+1][y] == 'r' || map[x][y+1] == 'r'){
         if(map[x][y] != 'x' && map[x][y] != 'v' && map[x][y] != 'c' && map[x][y] != 'b'){
             if(k1.worker >= map[x][y]){
@@ -231,7 +255,6 @@ bool Way(){
             }
             else if(map[x][y] != 'r'){
                 map[x][y] -= k1.worker;
-                DrawText("You don't have enough worker!", 650, 820, 40, RED);
             }
             return true;
         }
