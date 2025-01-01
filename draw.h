@@ -34,5 +34,6 @@ extern int maxRow, maxCol;
 extern int map[17][17];
 extern kingdom k1, k2;
 extern village v[25];
+extern int UntakenVills;
 
 #endif // DRAW_H
