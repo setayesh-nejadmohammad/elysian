@@ -83,6 +83,7 @@ void Map() {
     k1.goldProduction = 1;
     k1.foodProduction = 0;
     k1.roadCount = 0;
+    k1.villNum = 0;
 
     k2.gold = 5;
     k2.worker = 1;
@@ -92,6 +93,7 @@ void Map() {
     k2.foodProduction = 0;
     k2.roadCount = 0;
     k2.x = k2.y = -1;
+    k2.villNum = 0;
 
     printf("number of castles(1 or 2): ");
     int castle1, castle2;
@@ -231,6 +233,8 @@ void wayCheck(int x,int y){
             for(int i=0;i<villNum;i++){
                 if((x-1==v[i].x && y==v[i].y || x+1==v[i].x && y==v[i].y || x==v[i].x && y-1==v[i].y || y+1==v[i].y && x==v[i].x ) && v[i].free != false){
                     v[i].free = false;
+                    k1.vills[i] = i;
+                    k1.villNum ++;
                     UntakenVills -= 1;
                     k1.goldProduction += v[i].goldRate;
                     k1.foodProduction += v[i].foodRate;
@@ -244,14 +248,20 @@ bool Way(){
     Vector2 mousePos = GetMousePosition();
     y = (mousePos.x-startX)/50;
     x = (mousePos.y-startY)/50;
+    bool flag = false;
+    for(int i = 0; i < k1.villNum; i++){
+        if(x-1==v[k1.vills[i]].x && y==v[k1.vills[i]].y || x+1==v[k1.vills[i]].x && y==v[k1.vills[i]].y || x==v[k1.vills[i]].x && y-1==v[k1.vills[i]].y || y+1==v[k1.vills[i]].y && x==v[k1.vills[i]].x ){
+            flag = true;
+            break;
+        }
+    }
     if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1
-       || map[x][y-1] == 'r' || map[x-1][y] == 'r' || map[x+1][y] == 'r' || map[x][y+1] == 'r'){
+       || map[x][y-1] == 'r' || map[x-1][y] == 'r' || map[x+1][y] == 'r' || map[x][y+1] == 'r' || flag){
         if(map[x][y] != 'x' && map[x][y] != 'v' && map[x][y] != 'c' && map[x][y] != 'b'){
             if(k1.worker >= map[x][y]){
                 k1.road[k1.roadCount].x = x;
                 k1.road[k1.roadCount].y = y;
                 k1.roadCount++;
-                //k1.worker -= map[x][y];
                 map[x][y] = 'r';
                 wayCheck(x, y);
             }
