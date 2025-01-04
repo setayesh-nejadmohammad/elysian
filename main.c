@@ -6,7 +6,7 @@
 #include "info.h"
 #include <string.h>
 
-int Round = 0;
+
 
 
 int main(void) {
@@ -21,6 +21,12 @@ int main(void) {
     //int map[17][17]={0};
     Map();
     generate_random();
+    for(int i = 0; i < n; i++){      // Fill map1 and map2 with map
+        for(int j = 0; j < m; j++){
+            map1[i][j] = map[i][j];
+            map2[i][j] = map[i][j];
+        }
+    }
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
 
@@ -43,7 +49,7 @@ int main(void) {
 
         //DrawTexture(duck,100,100,WHITE);
 
-        if(UntakenVills == 0) {
+        if(UntakenVills == -1) {
             DrawText("YOU WIN!", 500, 400, 200, DARKPURPLE);
             EndDrawing();
             WaitTime(3);
@@ -59,49 +65,101 @@ int main(void) {
 
 
         //Draw the icons in the main window
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<m ; j++){
-                if(map[i][j] == 'c'){
-                    drawCastle1(i, j);
-                }
-                else if(map[i][j] == 'b'){
-                    drawCastle2(i, j);
-                }
-                else if(map[i][j] == 'v'){
-                    drawVillage(i, j);
-                }
-                else if(map[i][j] == 'x'){
-                    drawBlock(i, j);
-                }
-                else if(map[i][j] == 'r'){
-                    DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, RED);
-                }
-                else{
-                    Color level1 = (Color){0, 146, 115, 16};
-                    Color level2 = (Color){0, 146, 115, 32};
-                    Color level3 = (Color){0, 146, 115, 64};
-                    Color level4 = (Color){0, 146, 115, 128};
-                    Color level5 = (Color){0, 146, 115, 255};
-                    if(map[i][j]== 1){
-                        DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level1);
+        if(Round % 2 != 0){ //.............................. k1 ..................................
+            for(int i = 0; i<n; i++){
+                for(int j = 0; j<m ; j++){
+                    if(map1[i][j] == 'c'){
+                        drawCastle1(i, j);
                     }
-                    else if(map[i][j]== 2){
-                        DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level2);
+                    else if(map1[i][j] == 'b'){
+                        drawCastle2(i, j);
                     }
-                    else if(map[i][j]== 3){
-                        DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level3);
+                    else if(map1[i][j] == 'v'){
+                        drawVillage(i, j);
                     }
-                    else if(map[i][j]== 4){
-                        DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level4);
+                    else if(map1[i][j] == 'x'){
+                        drawBlock(i, j);
                     }
-                    else if(map[i][j]== 5){
-                        DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level5);
+                    else if(map1[i][j] == 'r'){
+                        DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKBLUE);
+                    }
+                    else if(map1[i][j] == 'R'){
+                        DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKPURPLE);
+                    }
+                    else{
+                        Color level1 = (Color){0, 146, 115, 16};
+                        Color level2 = (Color){0, 146, 115, 32};
+                        Color level3 = (Color){0, 146, 115, 64};
+                        Color level4 = (Color){0, 146, 115, 128};
+                        Color level5 = (Color){0, 146, 115, 255};
+                        if(map1[i][j]== 1){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level1);
+                        }
+                        else if(map1[i][j]== 2){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level2);
+                        }
+                        else if(map1[i][j]== 3){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level3);
+                        }
+                        else if(map1[i][j]== 4){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level4);
+                        }
+                        else if(map1[i][j]== 5){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level5);
+                        }
+                    }
+                }
+            }
+        }
+        else {  //.......................................... k2 ..........................................
+            for(int i = 0; i<n; i++){
+                for(int j = 0; j<m ; j++){
+                    if(map2[i][j] == 'c'){
+                        drawCastle1(i, j);
+                    }
+                    else if(map2[i][j] == 'b'){
+                        drawCastle2(i, j);
+                    }
+                    else if(map2[i][j] == 'v'){
+                        drawVillage(i, j);
+                    }
+                    else if(map2[i][j] == 'x'){
+                        drawBlock(i, j);
+                    }
+                    else if(map2[i][j] == 'r'){
+                        DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKBLUE);
+                    }
+                    else if(map2[i][j] == 'R'){
+                        DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKPURPLE);
+                    }
+                    else{
+                        Color level1 = (Color){0, 146, 115, 16};
+                        Color level2 = (Color){0, 146, 115, 32};
+                        Color level3 = (Color){0, 146, 115, 64};
+                        Color level4 = (Color){0, 146, 115, 128};
+                        Color level5 = (Color){0, 146, 115, 255};
+                        if(map2[i][j]== 1){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level1);
+                        }
+                        else if(map2[i][j]== 2){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level2);
+                        }
+                        else if(map2[i][j]== 3){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level3);
+                        }
+                        else if(map2[i][j]== 4){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level4);
+                        }
+                        else if(map2[i][j]== 5){
+                            DrawRectangle(startX + j*cellSize, startY + i*cellSize, cellSize-2, cellSize-2, level5);
+                        }
                     }
                 }
             }
         }
 
-        drawInformation(Round);  //define in draw.c
+
+        drawInformation();  //define in info.c
 
 
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -114,12 +172,6 @@ int main(void) {
                 DrawText("You can't make road here!", 650, 820, 40, RED);
                 EndDrawing();
                 WaitTime(2);
-            }
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    printf(" %d ", map[i][j]);
-                }
-                printf("\n");
             }
         }
 
