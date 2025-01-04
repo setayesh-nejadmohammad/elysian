@@ -6,7 +6,7 @@
 #include "info.h"
 #include <string.h>
 
-int Round = 0;
+
 
 
 int main(void) {
@@ -74,7 +74,7 @@ int main(void) {
                     drawBlock(i, j);
                 }
                 else if(map[i][j] == 'r'){
-                    DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, RED);
+                    DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKBLUE);
                 }
                 else{
                     Color level1 = (Color){0, 146, 115, 16};
