@@ -13,7 +13,7 @@ void drawBlock();
 void Map();
 void generate_random();
 bool Way();
-void drawInformation();
+void roadClear();
 // ... other declarations
 
 // Struct declarations
@@ -32,8 +32,11 @@ extern int castleNum;
 extern int startX, startY;
 extern int maxRow, maxCol;
 extern int map[17][17];
+extern int map1[17][17];
+extern int map2[17][17];
 extern kingdom k1, k2;
 extern village v[25];
 extern int UntakenVills;
+extern int Round;
 
 #endif // DRAW_H
