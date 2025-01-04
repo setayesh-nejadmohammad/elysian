@@ -21,6 +21,8 @@ int startX;
 int startY;
 int UntakenVills;
 
+int Round = 1;
+
 kingdom k1, k2;
 village v[25];
 
@@ -54,8 +56,8 @@ void generate_random(){
 }
 
 void drawCastle1(int y, int x) {
-    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle.png");
-    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, PURPLE);
+    Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle2.png");
+    DrawTexture(castle, startX + x * cellSize, startY + y * cellSize, DARKBLUE);
 }
 void drawCastle2(int y, int x) {
     Texture2D castle= LoadTexture("D://git projects//elysian//pics//castle2.png");
