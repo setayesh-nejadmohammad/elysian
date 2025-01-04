@@ -28,6 +28,8 @@ typedef struct{
     int foodProduction;
     Point road[100];
     int roadCount;
+    int vills[25];
+    int villNum;
 }kingdom;
 
 
