@@ -12,6 +12,7 @@ void buyFood();
 void getWorker();
 void getSoldier();
 void update();
+void drawInformation();
 
 typedef struct{
     int x;
@@ -28,6 +29,8 @@ typedef struct{
     int foodProduction;
     Point road[100];
     int roadCount;
+    int vills[25];
+    int villNum;
 }kingdom;
 
 
