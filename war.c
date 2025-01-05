@@ -21,89 +21,89 @@ bool war(int x,int y) {
         }
         if (map1[x - 1][y] == 'R') {
             if (state == 1) {
-                roadClear(map1[x - 1][y]);
+                roadClear(x - 1,y,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x - 1][y]);
+                roadClear(x,y,2);
+                roadClear(x - 1,y,1);
             }
             return true;
         }
         else if (map1[x + 1][y] == 'R') {
             if (state == 1) {
-                roadClear(map1[x + 1][y]);
+                roadClear(x + 1,y,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x + 1][y]);
+                roadClear(x,y,2);
+                roadClear(x + 1,y,1);
             }
             return true;
         }
         else if (map1[x][y - 1] == 'R') {
             if (state == 1) {
-                roadClear(map1[x][y-1]);
+                roadClear(x,y-1,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x][y-1]);
+                roadClear(x,y,2);
+                roadClear(x,y-1,1);
             }
             return true;
         }
         else if (map1[x][y + 1] == 'R') {
             if (state == 1) {
-                roadClear(map1[x][y+1]);
+                roadClear(x,y+1,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x][y+1]);
+                roadClear(x,y,2);
+                roadClear(x,y+1,1);
             }
             return true;
         }
         if (map1[x-1][y] == 'W'){
             if (state == 1) {
-                roadClear(map1[x-1][y]);
+                roadClear(x-1,y,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x-1][y]);
+                roadClear(x,y,2);
+                roadClear(x-1,y,1);
             }
             return true;
         }
         else if (map1[x+1][y] == 'W'){
             if (state == 1) {
-                roadClear(map1[x+1][y]);
+                roadClear(x+1,y,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x+1][y]);
+                roadClear(x,y,2);
+                roadClear(x+1,y,1);
             }
             return true;
         }
         else if (map1[x][y-1] == 'W'){
             if (state == 1) {
-                roadClear(map1[x][y-1]);
+                roadClear(x,y-1,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x][y-1]);
+                roadClear(x,y,2);
+                roadClear(x,y-1,1);
             }
             return true;
         }
         else if (map1[x][y+1] == 'W'){
             if (state == 1) {
-                roadClear(map1[x][y+1]);
+                roadClear(x,y+1,state);
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map1[x][y]);
-                roadClear(map1[x][y+1]);
+                roadClear(x,y,2);
+                roadClear(x,y+1,1);
             }
             return true;
         }
@@ -111,10 +111,10 @@ bool war(int x,int y) {
             if(state == 1){
                 UntakenVills = -1;
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map1[x-1][y]);
-                roadClear(map1[x][y]);
+                roadClear(x-1,y,1);
+                roadClear(x,y,2);
             }
             return true;
         }
@@ -122,10 +122,10 @@ bool war(int x,int y) {
             if(state == 1){
                 UntakenVills = -1;
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map1[x+1][y]);
-                roadClear(map1[x][y]);
+                roadClear(x+1,y,1);
+                roadClear(x,y,2);
             }
             return true;
         }
@@ -133,10 +133,10 @@ bool war(int x,int y) {
             if(state == 1){
                 UntakenVills = -1;
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map1[x][y-1]);
-                roadClear(map1[x][y]);
+                roadClear(x,y-1,1);
+                roadClear(x,y,2);
             }
             return true;
         }
@@ -144,10 +144,10 @@ bool war(int x,int y) {
             if(state == 1){
                 UntakenVills = -1;
             } else if (state == 2) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map1[x][y+1]);
-                roadClear(map1[x][y]);
+                roadClear(x,y+1,2);
+                roadClear(x,y,1);
             }
             return true;
         }
@@ -163,89 +163,89 @@ bool war(int x,int y) {
         }
         if (map2[x - 1][y] == 'r') {
             if (state == 2) {
-                roadClear(map2[x - 1][y]);
+                roadClear(x - 1,y,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x - 1][y]);
+                roadClear(x,y,1);
+                roadClear(x - 1,y,2);
             }
             return true;
         }
         else if (map2[x + 1][y] == 'r') {
             if (state == 2) {
-                roadClear(map2[x + 1][y]);
+                roadClear(x + 1,y,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x + 1][y]);
+                roadClear(x,y,1);
+                roadClear(x + 1,y,2);
             }
             return true;
         }
         else if (map2[x][y - 1] == 'r') {
             if (state == 2) {
-                roadClear(map2[x][y-1]);
+                roadClear(x,y-1,state);
             } else if (state == 2) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x][y-1]);
+                roadClear(x,y,1);
+                roadClear(x,y-1,2);
             }
             return true;
         }
         else if (map2[x][y + 1] == 'r') {
             if (state == 2) {
-                roadClear(map2[x][y+1]);
+                roadClear(x,y+1,state);
             } else if (state == 1) {
-                roadClear(map1[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x][y+1]);
+                roadClear(x,y,1);
+                roadClear(x,y+1,2);
             }
             return true;
         }
         if (map2[x-1][y] == 'V'){
             if (state == 2) {
-                roadClear(map2[x-1][y]);
+                roadClear(x-1,y,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x-1][y]);
+                roadClear(x,y,1);
+                roadClear(x-1,y,2);
             }
             return true;
         }
         else if (map2[x+1][y] == 'V'){
             if (state == 2) {
-                roadClear(map2[x+1][y]);
+                roadClear(x+1,y,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x+1][y]);
+                roadClear(x,y,1);
+                roadClear(x+1,y,2);
             }
             return true;
         }
         else if (map2[x][y-1] == 'V'){
             if (state == 2) {
-                roadClear(map2[x][y-1]);
+                roadClear(x,y-1,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x][y-1]);
+                roadClear(x,y,1);
+                roadClear(x,y-1,2);
             }
             return true;
         }
         else if (map2[x][y+1] == 'V'){
             if (state == 2) {
-                roadClear(map2[x][y+1]);
+                roadClear(x,y+1,state);
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             } else if (state == 0) {
-                roadClear(map2[x][y]);
-                roadClear(map2[x][y+1]);
+                roadClear(x,y,1);
+                roadClear(x,y+1,2);
             }
             return true;
         }
@@ -253,10 +253,10 @@ bool war(int x,int y) {
             if(state == 2){
                 UntakenVills = -1;
             } else if (state == 1) {
-                roadClear(map[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map2[x-1][y]);
-                roadClear(map2[x][y]);
+                roadClear(x-1,y,2);
+                roadClear(x,y,1);
             }
             return true;
         }
@@ -264,10 +264,10 @@ bool war(int x,int y) {
             if(state == 2){
                 UntakenVills = -1;
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map2[x+1][y]);
-                roadClear(map2[x][y]);
+                roadClear(x+1,y,2);
+                roadClear(x,y,1);
             }
             return true;
         }
@@ -275,10 +275,10 @@ bool war(int x,int y) {
             if(state == 2){
                 UntakenVills = -1;
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map2[x][y-1]);
-                roadClear(map2[x][y]);
+                roadClear(x,y-1,2);
+                roadClear(x,y,1);
             }
             return true;
         }
@@ -286,10 +286,10 @@ bool war(int x,int y) {
             if(state == 2){
                 UntakenVills = -1;
             } else if (state == 1) {
-                roadClear(map2[x][y]);
+                roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(map2[x][y+1]);
-                roadClear(map2[x][y]);
+                roadClear(x,y+1,2);
+                roadClear(x,y,1);
             }
             return true;
         }
