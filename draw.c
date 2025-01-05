@@ -71,6 +71,14 @@ void drawVillage(int y, int x){
     Texture2D village = LoadTexture("D://git projects//elysian//pics//village.png");
     DrawTexture(village, startX + x * cellSize, startY + y * cellSize, WHITE);
 }
+void drawVillage1(int y, int x){
+    Texture2D village = LoadTexture("D://git projects//elysian//pics//village2.png");
+    DrawTexture(village, startX + x * cellSize, startY + y * cellSize, DARKBLUE);
+}
+void drawVillage2(int y, int x){
+    Texture2D village = LoadTexture("D://git projects//elysian//pics//village2.png");
+    DrawTexture(village, startX + x * cellSize, startY + y * cellSize, DARKPURPLE);
+}
 void drawBlock(int y, int x){
     Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
     DrawTexture(block, startX + x * cellSize, startY + y * cellSize, WHITE);
@@ -263,6 +271,8 @@ void wayCheck(int x,int y){
                         UntakenVills -= 1;
                         k1.goldProduction += v[i].goldRate;
                         k1.foodProduction += v[i].foodRate;
+                        map1[v[i].x][v[i].y] = 'V';
+                        map2[v[i].x][v[i].y] = 'V';
                     }
                 }
             }
@@ -279,6 +289,8 @@ void wayCheck(int x,int y){
                         UntakenVills -= 1;
                         k2.goldProduction += v[i].goldRate;
                         k2.foodProduction += v[i].foodRate;
+                        map1[v[i].x][v[i].y] = 'W';
+                        map2[v[i].x][v[i].y] = 'W';
                     }
                 }
             }
@@ -286,21 +298,24 @@ void wayCheck(int x,int y){
     }
 
 }
+
 bool Way(){
     int x, y;
     Vector2 mousePos = GetMousePosition();
     y = (mousePos.x-startX)/50;
     x = (mousePos.y-startY)/50;
+
     if(Round % 2 != 0){    //k1 way
-        bool flag = false;
-        for(int i = 0; i < k1.villNum; i++){
-            if(x-1==v[k1.vills[i]].x && y==v[k1.vills[i]].y || x+1==v[k1.vills[i]].x && y==v[k1.vills[i]].y || x==v[k1.vills[i]].x && y-1==v[k1.vills[i]].y || y+1==v[k1.vills[i]].y && x==v[k1.vills[i]].x ){
-                flag = true;
-                break;
-            }
-        }
-        if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1
-           || map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == 'r' || flag){
+        bool villCheck = false;
+        if(map1[x][y-1] == 'V' || map2[x-1][y] == 'V' || map2[x+1][y] == 'V' || map2[x][y+1] == 'V') villCheck = true;
+
+        bool kingdomCheck = false;
+        if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1) kingdomCheck = true;
+
+        bool roadCheck = false;
+        if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == '1') roadCheck = true;
+
+        if(kingdomCheck || roadCheck || villCheck){
             if(map1[x][y] != 'x' && map1[x][y] != 'v' && map1[x][y] != 'c' && map1[x][y] != 'b' && map1[x][y] != 'R'){
                 if(k1.worker >= map1[x][y]){
                     k1.road[k1.roadCount].x = x;
@@ -320,15 +335,16 @@ bool Way(){
         return false;
     }
     else{     //k2 way
-        bool flag = false;
-        for(int i = 0; i < k2.villNum; i++){
-            if(x-1==v[k2.vills[i]].x && y==v[k2.vills[i]].y || x+1==v[k2.vills[i]].x && y==v[k2.vills[i]].y || x==v[k2.vills[i]].x && y-1==v[k2.vills[i]].y || y+1==v[k2.vills[i]].y && x==v[k2.vills[i]].x ){
-                flag = true;
-                break;
-            }
-        }
-        if(x == k2.x + 1 && y == k2.y || x == k2.x && y == k2.y + 1 || x == k2.x - 1 && y == k2.y || x == k2.x && y == k2.y - 1
-           || map2[x][y-1] == 'R' || map2[x-1][y] == 'R' || map2[x+1][y] == 'R' || map2[x][y+1] == 'R' || flag){
+        bool villCheck = false;
+        if(map2[x][y-1] == 'W' || map2[x-1][y] == 'W' || map2[x+1][y] == 'W' || map2[x][y+1] == 'W') villCheck = true;
+
+        bool kingdomCheck = false;
+        if(x == k2.x + 1 && y == k2.y || x == k2.x && y == k2.y + 1 || x == k2.x - 1 && y == k2.y || x == k2.x && y == k2.y - 1) kingdomCheck = true;
+
+        bool roadCheck = false;
+        if(map2[x][y-1] == 'R' || map2[x-1][y] == 'R' || map2[x+1][y] == 'R' || map2[x][y+1] == 'R') roadCheck = true;
+
+        if(kingdomCheck || roadCheck || villCheck){
             if(map2[x][y] != 'x' && map2[x][y] != 'v' && map2[x][y] != 'c' && map2[x][y] != 'b' && map2[x][y] != 'r'){
                 if(k2.worker >= map2[x][y]){
                     k2.road[k2.roadCount].x = x;
