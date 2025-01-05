@@ -6,19 +6,21 @@
 #include "info.h"
 #include <string.h>
 
-
+// in all the maps:
+// v = not taken village
+// V = taken village by k1
+// W = taken village by k2
 
 
 int main(void) {
     //*********************************************************************************************************
-    //int n, m;
+
     printf("Enter the dimensions of the game:(it will be a n*m table)\n");
     printf("n = ");
     scanf("%d", &n); //get the table row num
     printf("m = ");
     scanf("%d", &m); //get the table column num
 
-    //int map[17][17]={0};
     Map();
     generate_random();
     for(int i = 0; i < n; i++){      // Fill map1 and map2 with map
@@ -77,6 +79,12 @@ int main(void) {
                     else if(map1[i][j] == 'v'){
                         drawVillage(i, j);
                     }
+                    else if(map1[i][j] == 'V'){
+                        drawVillage1(i, j);
+                    }
+                    else if(map1[i][j] == 'W'){
+                        drawVillage2(i, j);
+                    }
                     else if(map1[i][j] == 'x'){
                         drawBlock(i, j);
                     }
@@ -122,6 +130,12 @@ int main(void) {
                     }
                     else if(map2[i][j] == 'v'){
                         drawVillage(i, j);
+                    }
+                    else if(map2[i][j] == 'V'){
+                        drawVillage1(i, j);
+                    }
+                    else if(map2[i][j] == 'W'){
+                        drawVillage2(i, j);
                     }
                     else if(map2[i][j] == 'x'){
                         drawBlock(i, j);
