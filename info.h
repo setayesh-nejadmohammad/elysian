@@ -12,10 +12,11 @@ void buyFood();
 void getWorker();
 void getSoldier();
 void update();
-bool round();
 
-
-
+typedef struct{
+    int x;
+    int y;
+}Point;
 
 typedef struct{
     int x,y;
@@ -23,13 +24,20 @@ typedef struct{
     int gold;
     int soldier;
     int worker;
+    int goldProduction;
+    int foodProduction;
+    Point road[100];
+    int roadCount;
+    int vills[25];
+    int villnum;
 }kingdom;
 
 
 typedef struct{
     int x,y;
-    bool free;
-    bool taken;
+    bool free;   // This will check if a village is free(free = true) or taken(free = false) by a kingdom
+    int foodRate;
+    int goldRate;
 }village;
 
 
