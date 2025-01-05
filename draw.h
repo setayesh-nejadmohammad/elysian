@@ -9,6 +9,8 @@ void drawGrid();
 void drawCastle1();
 void drawCastle2();
 void drawVillage();
+void drawVillage1();
+void drawVillage2();
 void drawBlock();
 void Map();
 void generate_random();
