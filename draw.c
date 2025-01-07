@@ -5,7 +5,7 @@
 #include "info.h"
 #include <stdbool.h>
 #include <unistd.h>
-
+#include "war.h"
 
 
 
@@ -19,11 +19,13 @@ int map[17][17] = {0};  //main map
 int map1[17][17] = {0}; //k1 map
 int map2[17][17] = {0}; //k2 map
 
+
 int villNum; //Number of villages
 int castleNum;
 int startX;
 int startY;
 int UntakenVills;
+int WhoWin; // if k1 win(WhoWin = 1) if k2 win(WhoWin = 2)
 
 int Round = 1;
 
@@ -34,8 +36,6 @@ const int windowSize=1050;
 const int cellSize=50;
 
 void drawGrid() {
-    /*Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
-    DrawTexture(background, 0, 0, WHITE);*/
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++){
             //DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize, cellSize, LIGHTGRAY);
@@ -240,24 +240,10 @@ void Map() {
     }
 }
 
-void roadClear(int x, int y, int state){ // state shows that which Kingdom won the war
-    int rCount = 0; // number of road around the first road
-    if(map1[x-1][y] == 'r'){
-        rCount++;
-    }
-    if(map1[x][y-1] == 'r'){
-        rCount++;
-    }
-    if(map1[x+1][y] == 'r'){
-        rCount++;
-    }
-    if(map1[x][y+1] == 'r'){
-        rCount++;
-    }
-    if(rCount > 1){
-        map1[x][y] = map[x][y];  //remove the road from map1
-    }
-}
+
+
+
+
 
 void wayCheck(int x,int y){
     if(Round % 2 != 0){   //k1
@@ -296,7 +282,6 @@ void wayCheck(int x,int y){
             }
         }
     }
-
 }
 
 bool Way(){
@@ -305,7 +290,21 @@ bool Way(){
     y = (mousePos.x-startX)/50;
     x = (mousePos.y-startY)/50;
 
+    int state = -1;
+    if (k1.soldier > k2.soldier) {
+        state = 1;
+    } else if (k2.soldier > k1.soldier) {
+        state = 2;
+    } else if (k1.soldier == k2.soldier) {
+        state = 0;
+    }
+
     if(Round % 2 != 0){    //k1 way
+
+        bool Isk1Win = false;
+        if(war(x,y) && state == 1) Isk1Win = true;
+        else if(!war(x, y)) Isk1Win = true;
+
         bool villCheck = false;
         if(map1[x][y-1] == 'V' || map2[x-1][y] == 'V' || map2[x+1][y] == 'V' || map2[x][y+1] == 'V') villCheck = true;
 
@@ -313,9 +312,9 @@ bool Way(){
         if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1) kingdomCheck = true;
 
         bool roadCheck = false;
-        if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == '1') roadCheck = true;
+        if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == 'r') roadCheck = true;
 
-        if(kingdomCheck || roadCheck || villCheck){
+        if((kingdomCheck || roadCheck || villCheck) && Isk1Win){
             if(map1[x][y] != 'x' && map1[x][y] != 'v' && map1[x][y] != 'c' && map1[x][y] != 'b' && map1[x][y] != 'R'){
                 if(k1.worker >= map1[x][y]){
                     k1.road[k1.roadCount].x = x;
@@ -335,6 +334,11 @@ bool Way(){
         return false;
     }
     else{     //k2 way
+        bool Isk2Win = false;
+
+        if(war(x, y) && state == 2) Isk2Win = true;
+        else if(!war(x, y)) Isk2Win = true;
+
         bool villCheck = false;
         if(map2[x][y-1] == 'W' || map2[x-1][y] == 'W' || map2[x+1][y] == 'W' || map2[x][y+1] == 'W') villCheck = true;
 
@@ -344,7 +348,7 @@ bool Way(){
         bool roadCheck = false;
         if(map2[x][y-1] == 'R' || map2[x-1][y] == 'R' || map2[x+1][y] == 'R' || map2[x][y+1] == 'R') roadCheck = true;
 
-        if(kingdomCheck || roadCheck || villCheck){
+        if((kingdomCheck || roadCheck || villCheck) && Isk2Win){
             if(map2[x][y] != 'x' && map2[x][y] != 'v' && map2[x][y] != 'c' && map2[x][y] != 'b' && map2[x][y] != 'r'){
                 if(k2.worker >= map2[x][y]){
                     k2.road[k2.roadCount].x = x;
