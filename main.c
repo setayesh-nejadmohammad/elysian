@@ -35,6 +35,10 @@ int main(void) {
     SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
 
     //Texture2D RoundGuide = LoadTexture("D:/git projects/elysian/pics/RoundGuide.png");
+    Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+    Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
+    Texture2D village = LoadTexture("D://git projects//elysian//pics//village2.png");
+    Texture2D castle = LoadTexture("D://git projects//elysian//pics//castle2.png");
 
     //--------------------------------------------------------------------------------------
 
@@ -46,13 +50,18 @@ int main(void) {
 
         ClearBackground(GRAY);
 
-        Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
+
         DrawTexture(background, 0, 0, WHITE);
 
         //DrawTexture(duck,100,100,WHITE);
 
         if(UntakenVills == -1) {
-            DrawText("YOU WIN!", 500, 400, 200, DARKPURPLE);
+            if(WhoWin == 1){
+                DrawText("YOU WIN!", 500, 400, 200, DARKBLUE);
+            }
+            else if(WhoWin == 2){
+                DrawText("YOU WIN!", 500, 400, 200, DARKPURPLE);
+            }
             EndDrawing();
             WaitTime(3);
             endGame = false;
@@ -71,22 +80,28 @@ int main(void) {
             for(int i = 0; i<n; i++){
                 for(int j = 0; j<m ; j++){
                     if(map1[i][j] == 'c'){
-                        drawCastle1(i, j);
+                        //drawCastle1(i, j);
+                        DrawTexture(castle, startX + j * cellSize, startY + i * cellSize, DARKBLUE);
                     }
                     else if(map1[i][j] == 'b'){
-                        drawCastle2(i, j);
+                        //drawCastle2(i, j);
+                        DrawTexture(castle, startX + j * cellSize, startY + i * cellSize, DARKPURPLE);
                     }
                     else if(map1[i][j] == 'v'){
-                        drawVillage(i, j);
+                        //drawVillage(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, BLACK);
                     }
                     else if(map1[i][j] == 'V'){
-                        drawVillage1(i, j);
+                        //drawVillage1(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, DARKBLUE);
                     }
                     else if(map1[i][j] == 'W'){
-                        drawVillage2(i, j);
+                        //drawVillage2(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, DARKPURPLE);
                     }
                     else if(map1[i][j] == 'x'){
-                        drawBlock(i, j);
+                        //drawBlock(i, j);
+                        DrawTexture(block, startX + j * cellSize, startY + i * cellSize, WHITE);
                     }
                     else if(map1[i][j] == 'r'){
                         DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKBLUE);
@@ -123,22 +138,28 @@ int main(void) {
             for(int i = 0; i<n; i++){
                 for(int j = 0; j<m ; j++){
                     if(map2[i][j] == 'c'){
-                        drawCastle1(i, j);
+                        //drawCastle1(i, j);
+                        DrawTexture(castle, startX + j * cellSize, startY + i * cellSize, DARKBLUE);
                     }
                     else if(map2[i][j] == 'b'){
-                        drawCastle2(i, j);
+                        //drawCastle2(i, j);
+                        DrawTexture(castle, startX + j * cellSize, startY + i * cellSize, DARKPURPLE);
                     }
                     else if(map2[i][j] == 'v'){
-                        drawVillage(i, j);
+                        //drawVillage(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, BLACK);
                     }
                     else if(map2[i][j] == 'V'){
-                        drawVillage1(i, j);
+                        //drawVillage1(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, DARKBLUE);
                     }
                     else if(map2[i][j] == 'W'){
-                        drawVillage2(i, j);
+                        //drawVillage2(i, j);
+                        DrawTexture(village, startX + j * cellSize, startY + i * cellSize, DARKPURPLE);
                     }
                     else if(map2[i][j] == 'x'){
-                        drawBlock(i, j);
+                        //drawBlock(i, j);
+                        DrawTexture(block, startX + j * cellSize, startY + i * cellSize, WHITE);
                     }
                     else if(map2[i][j] == 'r'){
                         DrawRectangle(startX + j * cellSize, startY + i * cellSize, cellSize - 2, cellSize - 2, DARKBLUE);
