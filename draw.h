@@ -40,5 +40,6 @@ extern kingdom k1, k2;
 extern village v[25];
 extern int UntakenVills;
 extern int Round;
+extern int WhoWin;
 
 #endif // DRAW_H
