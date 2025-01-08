@@ -1,7 +1,3 @@
-//
-// Created by setayesh on 1/5/2025.
-//
-
 #ifndef ELYSIAN_WAR_H
 #define ELYSIAN_WAR_H
 #include <stdbool.h>
