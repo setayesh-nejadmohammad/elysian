@@ -303,6 +303,7 @@ bool Way(){
 
         bool Isk1Win = false;
         if(war(x,y) && state == 1) Isk1Win = true;
+        else if(war(x, y) && state == 2) return true;
         else if(!war(x, y)) Isk1Win = true;
 
         bool villCheck = false;
@@ -315,7 +316,7 @@ bool Way(){
         if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == 'r') roadCheck = true;
 
         if((kingdomCheck || roadCheck || villCheck) && Isk1Win){
-            if(map1[x][y] != 'x' && map1[x][y] != 'v' && map1[x][y] != 'c' && map1[x][y] != 'b' && map1[x][y] != 'R'){
+            if(map1[x][y] != 'x' && map1[x][y] != 'v' && map1[x][y] != 'c' && map1[x][y] != 'b' && map1[x][y] != 'R' && map1[x][y] != 'V' && map1[x][y] != 'W'){
                 if(k1.worker >= map1[x][y]){
                     k1.road[k1.roadCount].x = x;
                     k1.road[k1.roadCount].y = y;
@@ -337,6 +338,7 @@ bool Way(){
         bool Isk2Win = false;
 
         if(war(x, y) && state == 2) Isk2Win = true;
+        else if(war(x, y) && state == 1) return true;
         else if(!war(x, y)) Isk2Win = true;
 
         bool villCheck = false;
@@ -349,7 +351,7 @@ bool Way(){
         if(map2[x][y-1] == 'R' || map2[x-1][y] == 'R' || map2[x+1][y] == 'R' || map2[x][y+1] == 'R') roadCheck = true;
 
         if((kingdomCheck || roadCheck || villCheck) && Isk2Win){
-            if(map2[x][y] != 'x' && map2[x][y] != 'v' && map2[x][y] != 'c' && map2[x][y] != 'b' && map2[x][y] != 'r'){
+            if(map2[x][y] != 'x' && map2[x][y] != 'v' && map2[x][y] != 'c' && map2[x][y] != 'b' && map2[x][y] != 'r' && map2[x][y] != 'V' && map2[x][y] != 'W'){
                 if(k2.worker >= map2[x][y]){
                     k2.road[k2.roadCount].x = x;
                     k2.road[k2.roadCount].y = y;
