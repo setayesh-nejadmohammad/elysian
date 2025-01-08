@@ -248,8 +248,8 @@ bool war(int x,int y) {
             } else if (state == 2) {
                 roadClear(x,y,state);
             }else if (state == 0) {
-                roadClear(x,y+1,2);
-                roadClear(x,y,1);
+                roadClear(x,y+1,1);
+                roadClear(x,y,2);
             }
             return true;
         }
