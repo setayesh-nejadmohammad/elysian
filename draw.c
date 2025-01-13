@@ -284,6 +284,7 @@ void wayCheck(int x,int y){
     }
 }
 
+
 bool Way(){
     int x, y;
     Vector2 mousePos = GetMousePosition();
@@ -310,12 +311,22 @@ bool Way(){
         bool roadCheck = false;
         if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == 'r') roadCheck = true;
 
-        bool Isk1Win = false;
+        bool Isk1Win = false; //in baraye ine ke vaghti ke ye jaee kenar jade harif mikhad jade bezane tarah nadashte bashe behesh natoone bezane.
         if(villCheck || kingdomCheck || roadCheck){
             if(war(x,y) && state == 1) Isk1Win = true;
             else if(war(x, y) && state == 2) return true;
             else if(!war(x, y)) Isk1Win = true;
         }
+
+        villCheck = false;
+        if(map1[x][y-1] == 'V' || map2[x-1][y] == 'V' || map2[x+1][y] == 'V' || map2[x][y+1] == 'V') villCheck = true;
+
+        kingdomCheck = false;
+        if(x == k1.x + 1 && y == k1.y || x == k1.x && y == k1.y + 1 || x == k1.x - 1 && y == k1.y || x == k1.x && y == k1.y - 1) kingdomCheck = true;
+
+        roadCheck = false;
+        if(map1[x][y-1] == 'r' || map1[x-1][y] == 'r' || map1[x+1][y] == 'r' || map1[x][y+1] == 'r') roadCheck = true;
+
         if((kingdomCheck || roadCheck || villCheck) && Isk1Win){
             if(map1[x][y] != 'x' && map1[x][y] != 'v' && map1[x][y] != 'c' && map1[x][y] != 'b' && map1[x][y] != 'R' && map1[x][y] != 'V' && map1[x][y] != 'W'){
                 if(k1.worker >= map1[x][y]){
@@ -325,6 +336,7 @@ bool Way(){
                     map1[x][y] = 'r';
                     map2[x][y] = 'r';
                     wayCheck(x, y);
+                    //cleanTheWay(state);
                     return true;
                 }
                 else if(map1[x][y] != 'r') {
@@ -352,6 +364,16 @@ bool Way(){
             else if(war(x, y) && state == 1) return true;
             else if(!war(x, y)) Isk2Win = true;
         }
+
+        villCheck = false;
+        if(map2[x][y-1] == 'W' || map2[x-1][y] == 'W' || map2[x+1][y] == 'W' || map2[x][y+1] == 'W') villCheck = true;
+
+        kingdomCheck = false;
+        if(x == k2.x + 1 && y == k2.y || x == k2.x && y == k2.y + 1 || x == k2.x - 1 && y == k2.y || x == k2.x && y == k2.y - 1) kingdomCheck = true;
+
+        roadCheck = false;
+        if(map2[x][y-1] == 'R' || map2[x-1][y] == 'R' || map2[x+1][y] == 'R' || map2[x][y+1] == 'R') roadCheck = true;
+
         if((kingdomCheck || roadCheck || villCheck) && Isk2Win){
             if(map2[x][y] != 'x' && map2[x][y] != 'v' && map2[x][y] != 'c' && map2[x][y] != 'b' && map2[x][y] != 'r' && map2[x][y] != 'V' && map2[x][y] != 'W'){
                 if(k2.worker >= map2[x][y]){
@@ -361,6 +383,7 @@ bool Way(){
                     map2[x][y] = 'R';
                     map1[x][y] = 'R';
                     wayCheck(x, y);
+                    //cleanTheWay(state);
                     return true;
                 }
                 else if(map2[x][y] != 'R'){
