@@ -14,12 +14,6 @@
 int main(void) {
     //*********************************************************************************************************
 
-    printf("Enter the dimensions of the game:(it will be a n*m table)\n");
-    printf("n = ");
-    scanf("%d", &n); //get the table row num
-    printf("m = ");
-    scanf("%d", &m); //get the table column num
-
     Map();
     generate_random();
     for(int i = 0; i < n; i++){      // Fill map1 and map2 with map
