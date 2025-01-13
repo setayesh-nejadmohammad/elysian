@@ -5,6 +5,7 @@
 #include "war.h"
 #include "draw.h"
 #include <stdbool.h>
+#include <stdio.h>
 
 bool mark[17][17] = {false};
 bool validRoad[17][17] = {false};
@@ -104,301 +105,434 @@ void roadClear(int x, int y, int state){ // state shows that which Kingdom won t
             }
         }
     }
+
+    for(int i=0 ; i<n ; i++){
+        for(int j=0 ; j<m ; j++){
+            if(map1[i][j] == 'W'){
+                if(map1[i][j-1] != 'R' && map1[i][j+1] != 'R' && map1[i-1][j] != 'R' && map1[i+1][j] != 'R'){
+                    for(int t=0 ; t<villNum ; t++){
+                        if(i == v[k2.vills[t]].x && j == v[k2.vills[t]].y){
+                            v[k2.vills[t]].free = true ;
+                            k2.foodProduction -= v[k2.vills[t]].foodRate;
+                            k2.goldProduction -= v[k2.vills[t]].goldRate;
+                            k2.vills[t] = -1;
+                            UntakenVills += 1;
+                            break;
+                        }
+                    }
+                    map1[i][j] = 'v';
+                    map2[i][j] = 'v';
+                }
+            }
+            else if(map1[i][j] == 'V'){
+                if(map1[i][j-1] != 'r' && map1[i][j+1] != 'r' && map1[i-1][j] != 'r' && map1[i+1][j] != 'r'){
+                    for(int t=0 ; t<villNum ; t++){
+                        if(i == v[k1.vills[t]].x && j == v[k1.vills[t]].y){
+                            v[k1.vills[t]].free = true ;
+                            k1.foodProduction -= v[k1.vills[t]].foodRate;
+                            k1.goldProduction -= v[k1.vills[t]].goldRate;
+                            k1.vills[t] = -1;
+                            UntakenVills += 1;
+                            break;
+                        }
+                    }
+                    map1[i][j] = 'v';
+                    map2[i][j] = 'v';
+                }
+            }
+        }
+    }
 }
 
 
 bool war(int x,int y) {
+    bool IsStillWar;
+    bool IsReturnTrue = false;
     int state = -1;
-    if (Round % 2 != 0) { //k1
+    for(int i = 0; i < 3; i++){
         if (k1.soldier > k2.soldier) {
             state = 1;
+            //k1.soldier = k1.soldier - k2.soldier;
+            //k2.soldier = 0;
         } else if (k2.soldier > k1.soldier) {
             state = 2;
-        } else if (k1.soldier == k2.soldier) {
+            //k2.soldier = k2.soldier - k1.soldier;
+            //k1.soldier = 0;
+        } else if (k1.soldier == k2.soldier){
             state = 0;
+            //k1.soldier = 0;
+            //k2.soldier = 0;
         }
-        if (map1[x - 1][y] == 'R') {
-            if (state == 1) {
-                roadClear(x - 1,y,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x - 1,y,1);
+        IsStillWar = false;
+        if (Round % 2 != 0) { //k1
+            if (map1[x - 1][y] == 'R') {
+                if (state == 1) {
+                    roadClear(x - 1,y,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x - 1,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x + 1][y] == 'R') {
-            if (state == 1) {
-                roadClear(x + 1,y,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x + 1,y,1);
+            else if (map1[x + 1][y] == 'R') {
+                if (state == 1) {
+                    roadClear(x + 1,y,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x + 1,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y - 1] == 'R') {
-            if (state == 1) {
-                roadClear(x,y-1,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x,y-1,1);
+            else if (map1[x][y - 1] == 'R') {
+                if (state == 1) {
+                    roadClear(x,y-1,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x,y-1,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y + 1] == 'R') {
-            if (state == 1) {
-                roadClear(x,y+1,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x,y+1,1);
+            else if (map1[x][y + 1] == 'R') {
+                if (state == 1) {
+                    roadClear(x,y+1,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x,y+1,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        if (map1[x-1][y] == 'W'){
-            if (state == 1) {
-                roadClear(x-1,y,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x-1,y,1);
+            if (map1[x-1][y] == 'W'){
+                if (state == 1) {
+                    roadClear(x-1,y,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x-1,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x+1][y] == 'W'){
-            if (state == 1) {
-                roadClear(x+1,y,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x+1,y,1);
+            else if (map1[x+1][y] == 'W'){
+                if (state == 1) {
+                    roadClear(x+1,y,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x+1,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y-1] == 'W'){
-            if (state == 1) {
-                roadClear(x,y-1,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x,y-1,1);
+            else if (map1[x][y-1] == 'W'){
+                if (state == 1) {
+                    roadClear(x,y-1,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x,y-1,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y+1] == 'W'){
-            if (state == 1) {
-                roadClear(x,y+1,state);
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,2);
-                roadClear(x,y+1,1);
+            else if (map1[x][y+1] == 'W'){
+                if (state == 1) {
+                    roadClear(x,y+1,state);
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,2);
+                    roadClear(x,y+1,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        if (map1[x-1][y] == 'b'){
-            if(state == 1){
-                UntakenVills = -1;
-                WhoWin = 1; //k1 is the games final winner
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x-1,y,1);
-                roadClear(x,y,2);
+            if (map1[x-1][y] == 'b'){
+                if(state == 1){
+                    UntakenVills = -1;
+                    WhoWin = 1; //k1 is the games final winner
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x-1,y,1);
+                    roadClear(x,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x+1][y] == 'b'){
-            if(state == 1){
-                UntakenVills = -1;
-                WhoWin = 1; //k1 is the games final winner
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x+1,y,1);
-                roadClear(x,y,2);
+            else if (map1[x+1][y] == 'b'){
+                if(state == 1){
+                    UntakenVills = -1;
+                    WhoWin = 1; //k1 is the games final winner
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x+1,y,1);
+                    roadClear(x,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y-1] == 'b'){
-            if(state == 1){
-                UntakenVills = -1;
-                WhoWin = 1; //k1 is the games final winner
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x,y-1,1);
-                roadClear(x,y,2);
+            else if (map1[x][y-1] == 'b'){
+                if(state == 1){
+                    UntakenVills = -1;
+                    WhoWin = 1; //k1 is the games final winner
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x,y-1,1);
+                    roadClear(x,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
-        }
-        else if (map1[x][y+1] == 'b'){
-            if(state == 1){
-                UntakenVills = -1;
-                WhoWin = 1; //k1 is the games final winner
-            } else if (state == 2) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x,y+1,1);
-                roadClear(x,y,2);
+            else if (map1[x][y+1] == 'b'){
+                if(state == 1){
+                    UntakenVills = -1;
+                    WhoWin = 1; //k1 is the games final winner
+                } else if (state == 2) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x,y+1,1);
+                    roadClear(x,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
             }
-            return true;
+            //return false;
         }
-        return false;
+        else if(Round % 2 == 0){ //k2
+            if (map2[x - 1][y] == 'r') {
+                if (state == 2) {
+                    roadClear(x - 1,y,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x - 1,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x + 1][y] == 'r') {
+                if (state == 2) {
+                    roadClear(x + 1,y,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x + 1,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y - 1] == 'r') {
+                if (state == 2) {
+                    roadClear(x,y-1,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x,y-1,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y + 1] == 'r') {
+                if (state == 2) {
+                    roadClear(x,y+1,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x,y+1,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            if (map2[x-1][y] == 'V'){
+                if (state == 2) {
+                    roadClear(x-1,y,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x-1,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x+1][y] == 'V'){
+                if (state == 2) {
+                    roadClear(x+1,y,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x+1,y,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y-1] == 'V'){
+                if (state == 2) {
+                    roadClear(x,y-1,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x,y-1,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y+1] == 'V'){
+                if (state == 2) {
+                    roadClear(x,y+1,state);
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                } else if (state == 0) {
+                    roadClear(x,y,1);
+                    roadClear(x,y+1,2);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            if (map2[x-1][y] == 'c'){
+                if(state == 2){
+                    UntakenVills = -1;
+                    WhoWin = 2; //k2 is the games final winner
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x-1,y,2);
+                    roadClear(x,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x+1][y] == 'c'){
+                if(state == 2){
+                    UntakenVills = -1;
+                    WhoWin = 2; //k2 is the games final winner
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x+1,y,2);
+                    roadClear(x,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y-1] == 'c'){
+                if(state == 2){
+                    UntakenVills = -1;
+                    WhoWin = 2; //k2 is the games final winner
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x,y-1,2);
+                    roadClear(x,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            else if (map2[x][y+1] == 'c'){
+                if(state == 2){
+                    UntakenVills = -1;
+                    WhoWin = 2; //k2 is the games final winner
+                } else if (state == 1) {
+                    roadClear(x,y,state);
+                }else if (state == 0) {
+                    roadClear(x,y+1,2);
+                    roadClear(x,y,1);
+                }
+                IsStillWar = true;
+                IsReturnTrue = true;
+                continue;
+                //return true;
+            }
+            //return false;
+        }
+
     }
-    else if(Round % 2 == 0){ //k2
+
+
+    if(IsReturnTrue){
         if (k1.soldier > k2.soldier) {
             state = 1;
+            k1.soldier = k1.soldier - k2.soldier;
+            k2.soldier = 0;
         } else if (k2.soldier > k1.soldier) {
             state = 2;
-        } else if (k1.soldier == k2.soldier) {
+            k2.soldier = k2.soldier - k1.soldier;
+            k1.soldier = 0;
+        } else if (k1.soldier == k2.soldier){
             state = 0;
+            k1.soldier = 0;
+            k2.soldier = 0;
         }
-        if (map2[x - 1][y] == 'r') {
-            if (state == 2) {
-                roadClear(x - 1,y,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x - 1,y,2);
-            }
-            return true;
-        }
-        else if (map2[x + 1][y] == 'r') {
-            if (state == 2) {
-                roadClear(x + 1,y,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x + 1,y,2);
-            }
-            return true;
-        }
-        else if (map2[x][y - 1] == 'r') {
-            if (state == 2) {
-                roadClear(x,y-1,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x,y-1,2);
-            }
-            return true;
-        }
-        else if (map2[x][y + 1] == 'r') {
-            if (state == 2) {
-                roadClear(x,y+1,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x,y+1,2);
-            }
-            return true;
-        }
-        if (map2[x-1][y] == 'V'){
-            if (state == 2) {
-                roadClear(x-1,y,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x-1,y,2);
-            }
-            return true;
-        }
-        else if (map2[x+1][y] == 'V'){
-            if (state == 2) {
-                roadClear(x+1,y,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x+1,y,2);
-            }
-            return true;
-        }
-        else if (map2[x][y-1] == 'V'){
-            if (state == 2) {
-                roadClear(x,y-1,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x,y-1,2);
-            }
-            return true;
-        }
-        else if (map2[x][y+1] == 'V'){
-            if (state == 2) {
-                roadClear(x,y+1,state);
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            } else if (state == 0) {
-                roadClear(x,y,1);
-                roadClear(x,y+1,2);
-            }
-            return true;
-        }
-        if (map2[x-1][y] == 'c'){
-            if(state == 2){
-                UntakenVills = -1;
-                WhoWin = 2; //k2 is the games final winner
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x-1,y,2);
-                roadClear(x,y,1);
-            }
-            return true;
-        }
-        else if (map2[x+1][y] == 'c'){
-            if(state == 2){
-                UntakenVills = -1;
-                WhoWin = 2; //k2 is the games final winner
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x+1,y,2);
-                roadClear(x,y,1);
-            }
-            return true;
-        }
-        else if (map2[x][y-1] == 'c'){
-            if(state == 2){
-                UntakenVills = -1;
-                WhoWin = 2; //k2 is the games final winner
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x,y-1,2);
-                roadClear(x,y,1);
-            }
-            return true;
-        }
-        else if (map2[x][y+1] == 'c'){
-            if(state == 2){
-                UntakenVills = -1;
-                WhoWin = 2; //k2 is the games final winner
-            } else if (state == 1) {
-                roadClear(x,y,state);
-            }else if (state == 0) {
-                roadClear(x,y+1,2);
-                roadClear(x,y,1);
-            }
-            return true;
-        }
-        return false;
+        return true;
     }
+    return false;
 }
