@@ -12,6 +12,7 @@ void buyFood();
 void getWorker();
 void getSoldier();
 void update();
+void drawInformation();
 
 typedef struct{
     int x;
