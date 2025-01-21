@@ -41,9 +41,21 @@ int main(void) {
     Sound gameOver = LoadSound("D://git projects//elysian//sounds//game over.mp3");
     Sound win = LoadSound("D://git projects//elysian//sounds//violin-win.mp3");
     Sound victory = LoadSound("D://git projects//elysian//sounds//victory.mp3");
+    Music bgMusic = LoadMusicStream("D://git projects//elysian//sounds//background music.mp3");
     //--------------------------------------------------------------------------------------
 
     bool endGame = true;
+
+    SetSoundVolume(gameOver, 5);
+    SetSoundVolume(win, 6);
+    SetMusicVolume(bgMusic, 1);
+    SetSoundVolume(bubblepop, 9);
+    SetSoundVolume(victory, 9);
+
+    bool musicPlaying = false;
+    PlayMusicStream(bgMusic);
+    musicPlaying = true;
+
     // Main game loop
     while (!WindowShouldClose() && endGame)    // Detect window close button or ESC key
     {
@@ -51,7 +63,7 @@ int main(void) {
 
         ClearBackground(GRAY);
         IsSomeOneLost = false;
-
+        State = -1;
         DrawTexture(background, 0, 0, WHITE);
 
         //DrawTexture(duck,100,100,WHITE);
@@ -76,6 +88,22 @@ int main(void) {
             WaitTime(3);
             endGame = false;
         }
+
+        UpdateMusicStream(bgMusic);
+        if (IsKeyPressed(KEY_SPACE)) {
+            musicPlaying = !musicPlaying;
+            if (musicPlaying) {
+                PlayMusicStream(bgMusic);
+            } else {
+                PauseMusicStream(bgMusic);
+            }
+        }
+
+        DrawText("Press SPACE to on/off music", 1400, 1000, 20, DARKGRAY);
+        // button to ON or OFF the background music
+        Rectangle buttonRect = {startX / 2 + 1400, startY + 722, 160, 30};
+        DrawRectangleRec(buttonRect, musicPlaying ? GREEN : RED);
+        DrawText(musicPlaying ? "Music ON" : "Music OFF", buttonRect.x + 40, buttonRect.y + 5, 20, WHITE);
 
 
         //ClearBackground(RAYWHITE);
@@ -244,7 +272,7 @@ int main(void) {
             Round++;
         }
 
-        if(IsSomeOneLost && Round%2 != WhoWin%2){
+        if(IsSomeOneLost && Round%2 != State%2 && State > 0){
             PlaySound(win);
         }
         else if(IsSomeOneLost){
@@ -263,6 +291,7 @@ int main(void) {
     UnloadSound(bubblepop);
     UnloadSound(win);
     CloseAudioDevice();
+
     // De-Initialization
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
