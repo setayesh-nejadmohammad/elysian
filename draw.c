@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include "war.h"
 
-
+bool IsSomeOneLost = false;
 
 const int maxRow = 17;
 const int maxCol = 17;
