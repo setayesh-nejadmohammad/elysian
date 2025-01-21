@@ -26,7 +26,7 @@ int startX;
 int startY;
 int UntakenVills;
 int WhoWin; // if k1 win(WhoWin = 1) if k2 win(WhoWin = 2)
-
+int State = -1;
 int Round = 1;
 
 kingdom k1, k2;
@@ -294,10 +294,13 @@ bool Way(){
     int state = -1;
     if (k1.soldier > k2.soldier) {
         state = 1;
+        State = 1;
     } else if (k2.soldier > k1.soldier) {
         state = 2;
+        State = 2;
     } else if (k1.soldier == k2.soldier) {
         state = 0;
+        State = 0;
     }
 
     if(Round % 2 != 0){    //k1 way
