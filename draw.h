@@ -41,5 +41,6 @@ extern village v[25];
 extern int UntakenVills;
 extern int Round;
 extern int WhoWin;
+extern bool IsSomeOneLost;
 
 #endif // DRAW_H
