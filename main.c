@@ -10,6 +10,8 @@
 // V = taken village by k1
 // W = taken village by k2
 
+bool IsGameStarted = false;
+
 
 int main(void) {
     //*********************************************************************************************************
@@ -24,6 +26,7 @@ int main(void) {
     }
     //*********************************************************************************************************
     InitWindow(0, 0, "main screen");
+    InitAudioDevice();
 
     SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
 
@@ -32,7 +35,12 @@ int main(void) {
     Texture2D block = LoadTexture("D://git projects//elysian//pics//block.png");
     Texture2D village = LoadTexture("D://git projects//elysian//pics//village2.png");
     Texture2D castle = LoadTexture("D://git projects//elysian//pics//castle2.png");
-
+    Sound startSound = LoadSound("D://git projects//elysian//sounds//game start sound.mp3");
+    Sound bubblepop = LoadSound("D://git projects//elysian//sounds//bubblepop.mp3");
+    Sound funnyLose = LoadSound("D://git projects//elysian//sounds//funny lose.mp3");
+    Sound gameOver = LoadSound("D://git projects//elysian//sounds//game over.mp3");
+    Sound win = LoadSound("D://git projects//elysian//sounds//violin-win.mp3");
+    Sound victory = LoadSound("D://git projects//elysian//sounds//victory.mp3");
     //--------------------------------------------------------------------------------------
 
     bool endGame = true;
@@ -42,11 +50,19 @@ int main(void) {
         BeginDrawing();
 
         ClearBackground(GRAY);
-
+        IsSomeOneLost = false;
 
         DrawTexture(background, 0, 0, WHITE);
 
         //DrawTexture(duck,100,100,WHITE);
+
+        if(!IsGameStarted){
+            DrawText("Elysian", 600, 400, 200, DARKPURPLE);
+            IsGameStarted = true;
+            EndDrawing();
+            WaitTime(1.5);
+            PlaySound(startSound);
+        }
 
         if(UntakenVills == -1) {
             if(WhoWin == 1){
@@ -55,6 +71,7 @@ int main(void) {
             else if(WhoWin == 2){
                 DrawText("YOU WIN!", 500, 400, 200, DARKPURPLE);
             }
+            PlaySound(victory);
             EndDrawing();
             WaitTime(3);
             endGame = false;
@@ -193,10 +210,12 @@ int main(void) {
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
             //way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
             if(Way()){
+                PlaySound(bubblepop);
                 update();
                 Round++;
             }
             else{
+                PlaySound(gameOver);
                 DrawText("You can't make road here!", 650, 820, 40, RED);
                 EndDrawing();
                 WaitTime(2);
@@ -225,6 +244,13 @@ int main(void) {
             Round++;
         }
 
+        if(IsSomeOneLost && Round%2 != WhoWin%2){
+            PlaySound(win);
+        }
+        else if(IsSomeOneLost){
+            PlaySound(funnyLose);
+        }
+
 
 
 
@@ -232,7 +258,11 @@ int main(void) {
     }
 
 
-
+    UnloadSound(startSound);
+    UnloadSound(gameOver);
+    UnloadSound(bubblepop);
+    UnloadSound(win);
+    CloseAudioDevice();
     // De-Initialization
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
