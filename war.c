@@ -73,6 +73,7 @@ void roadClear(int x, int y, int state){ // state shows that which Kingdom won t
             if(mark[i][j] && map1[i][j] != 'c' && map1[i][j] != 'b' && map1[i][j] != 'v' && map1[i][j] != 'V' && map1[i][j] != 'W' && map1[i][j] != 'x'){
                 map2[i][j] = map[i][j];
                 map1[i][j] = map[i][j];
+                IsSomeOneLost = true;
             }
         }
     }
