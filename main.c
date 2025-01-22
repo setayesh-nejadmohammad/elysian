@@ -28,7 +28,7 @@ int main(void) {
     InitWindow(0, 0, "main screen");
     InitAudioDevice();
 
-    SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     //Texture2D RoundGuide = LoadTexture("D:/git projects/elysian/pics/RoundGuide.png");
     Texture2D background = LoadTexture("D://git projects//elysian//pics//background.png");
@@ -47,7 +47,7 @@ int main(void) {
     bool endGame = true;
 
     SetSoundVolume(gameOver, 5);
-    SetSoundVolume(win, 6);
+    SetSoundVolume(win, 3);
     SetMusicVolume(bgMusic, 1);
     SetSoundVolume(bubblepop, 9);
     SetSoundVolume(victory, 9);
@@ -236,7 +236,6 @@ int main(void) {
 
 
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            //way(); // for Faz 4 we will add a MOUSE_BUTTON_RIGHT for second castle
             if(Way()){
                 PlaySound(bubblepop);
                 update();
